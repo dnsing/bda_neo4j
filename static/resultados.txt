@@ -1,0 +1,25 @@
+// Crear nodos de películas
+CREATE (:Pelicula {titulo: 'Pelicula 1', año: 2020})
+CREATE (:Pelicula {titulo: 'Pelicula 2', año: 2019})
+CREATE (:Pelicula {titulo: 'Pelicula 3', año: 2018})
+
+// Crear nodos de actores
+CREATE (:Actor {nombre: 'Actor 1'})
+CREATE (:Actor {nombre: 'Actor 2'})
+CREATE (:Actor {nombre: 'Actor 3'})
+
+// Crear relaciones entre actores y películas (por ejemplo, actores que actuaron en películas)
+MATCH (p:Pelicula {titulo: 'Pelicula 1'}), (a:Actor {nombre: 'Actor 1'})
+CREATE (a)-[:ACTUO_EN]->(p)
+
+MATCH (p:Pelicula {titulo: 'Pelicula 1'}), (a:Actor {nombre: 'Actor 2'})
+CREATE (a)-[:ACTUO_EN]->(p)
+
+MATCH (p:Pelicula {titulo: 'Pelicula 2'}), (a:Actor {nombre: 'Actor 2'})
+CREATE (a)-[:ACTUO_EN]->(p)
+
+MATCH (p:Pelicula {titulo: 'Pelicula 3'}), (a:Actor {nombre: 'Actor 3'})
+CREATE (a)-[:ACTUO_EN]->(p)
+
+
+datanuevo

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consultas</title>
+</head>
+<body>
+    <h1>Operaciones CRUD en Datos</h1>
+    <form method="POST" action="/consultas">
+        <label for="operacion">Selecciona una operación:</label>
+        <select name="operacion" id="operacion">
+            <option value="crear">Crear</option>
+            <option value="leer">Leer</option>
+            <option value="actualizar">Actualizar</option>
+            <option value="eliminar">Eliminar</option>
+        </select>
+
+        <div id="crear-dato" style="display: none;">
+            <label for="nuevo_dato">Nuevo Dato:</label>
+            <input type="text" name="nuevo_dato" id="nuevo_dato">
+        </div>
+
+        <!-- Otros campos específicos para leer, actualizar o eliminar -->
+
+        <input type="submit" value="Ejecutar">
+    </form>
+
+    <!-- Mostrar resultados de consultas aquí -->
+
+    <script>
+        document.getElementById("operacion").addEventListener("change", function () {
+            var operacionSeleccionada = this.value;
+            var crearDatoDiv = document.getElementById("crear-dato");
+
+            if (operacionSeleccionada === "crear") {
+                crearDatoDiv.style.display = "block";
+            } else {
+                crearDatoDiv.style.display = "none";
+            }
+
+            // Agrega condiciones para mostrar/ocultar campos según la operación seleccionada
+        });
+    </script>
+</body>
+</html>

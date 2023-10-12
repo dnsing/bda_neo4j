@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cargar CSV</title>
+</head>
+<body>
+    <h1>Cargar archivos CSV</h1>
+    <form method="POST" action="/cargar_csv" enctype="multipart/form-data">
+        <input type="file" name="archivos_csv" accept=".csv" multiple>
+        <input type="submit" value="Cargar">
+    </form>
+    <a href="/consultas">Consultas</a>
+</body>
+</html>
