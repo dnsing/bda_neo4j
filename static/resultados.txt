@@ -21,5 +21,3 @@ CREATE (a)-[:ACTUO_EN]->(p)
 MATCH (p:Pelicula {titulo: 'Pelicula 3'}), (a:Actor {nombre: 'Actor 3'})
 CREATE (a)-[:ACTUO_EN]->(p)
 
-
-datanuevo
