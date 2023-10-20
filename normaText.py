@@ -13,6 +13,9 @@ def eliminar_tildes(texto):
     # Reemplazar la palabra "ácido" por una cadena vacía (eliminarla)
     if 'ACIDO' in texto_sin_tildes:
         texto_sin_tildes = texto_sin_tildes.replace("ACIDO", "").replace("Acido", "")
+    elif ',' in texto_sin_tildes:
+        texto_sin_tildes = texto_sin_tildes.replace(",", "")
+        
     return texto_sin_tildes
 
 # Para limitar el string de la columna a una sola palabra
@@ -40,7 +43,14 @@ for i, file in enumerate(files_path):
 
     df_norma = pd.read_csv(nombre_archivo_salida)
     df_norma = compress(df_norma, compress_columns[i])
-    df_norma['TIPO DE FARMACO'] = df_norma['TIPO DE FARMACO'].apply(lambda x: 'ORIGINAL' if 'ETICA' in x else 'GENERICO')
-    print(df_norma)
-    df_norma.to_csv(nombre_archivo_salida)
+    if i == 0:
+        df_norma['TIPO DE FARMACO'] = df_norma['TIPO DE FARMACO'].apply(lambda x: 'ORIGINAL' if 'ETICA' in x else 'GENERICO')
+        df_norma = df_norma[['NOMBRE DEL PRODUCTO FARMACEUTICO','NOMBRE DEL LABORATORIO OFERTANTE']]
+    # print(df_norma)
+    elif i == 4:
+        df_norma['DESCRIPCION'] = df_norma['DESCRIPCION'].map(lambda x: x.strip(','))
+        df_norma = df_norma[['DESCRIPCION']]
+
+    df_norma = df_norma.drop_duplicates()
+    df_norma.to_csv(nombre_archivo_salida, index=False)
 
