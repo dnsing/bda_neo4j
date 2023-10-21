@@ -4,7 +4,7 @@ import unicodedata
 import csv
 
 files_path = ['1.1_Nombre_de_productos_genéricos_y_Farmaceutica.csv','2._Catálogo_de_Categorías_de_Medicamentos_CCSS.csv','3._muestra_Medicamentos_CCSS_clasificados.csv','4._Principios_Activos_y_Presentación.csv','6-Medicamentos_adquiridos_por_hospital.csv']
-compress_columns = [['NOMBRE DEL PRODUCTO FARMACEUTICO','PRINCIPIO ACTIVO O ASOCIACION DE PRINCIPIOS ACTIVOS','NOMBRE DE LA AGRUPACION HOMOGENEA DEL PRODUCTO SANITARIO'],[],[],['DESCRIPCION PRINCIPIO ACTIVO'],['DESCRIPCION']]
+compress_columns = [['NOMBRE DEL PRODUCTO FARMACEUTICO','PRINCIPIO ACTIVO O ASOCIACION DE PRINCIPIOS ACTIVOS','NOMBRE DE LA AGRUPACION HOMOGENEA DEL PRODUCTO SANITARIO'],[],['NOMBRE'],['DESCRIPCION PRINCIPIO ACTIVO'],['DESCRIPCION']]
 
 def eliminar_tildes(texto):
     texto_normalizado = unicodedata.normalize('NFD', texto)
@@ -45,11 +45,12 @@ for i, file in enumerate(files_path):
     df_norma = compress(df_norma, compress_columns[i])
     if i == 0:
         df_norma['TIPO DE FARMACO'] = df_norma['TIPO DE FARMACO'].apply(lambda x: 'ORIGINAL' if 'ETICA' in x else 'GENERICO')
-        df_norma = df_norma[['NOMBRE DEL PRODUCTO FARMACEUTICO','NOMBRE DEL LABORATORIO OFERTANTE']]
-    # print(df_norma)
+        df_norma = df_norma.drop(['ESTADO','APORTACION DEL BENEFICIARIO','NOMBRE DE LA AGRUPACION HOMOGENEA DEL PRODUCTO SANITARIO','DIAGNOSTICO HOSPITALARIO','ESPECIAL CONTROL MEDICO'], axis=1)
+    elif i == 3:
+         df_norma = df_norma.drop(['ATC','FORMA FARMACEUTICA','DETALLES DEL PRODUCTO','TAMANO DE CAJA O PRESENTACION','PRECIO MAXIMO DE VENTA TRANSACCION FINAL COMERCIAL'], axis=1)
     elif i == 4:
         df_norma['DESCRIPCION'] = df_norma['DESCRIPCION'].map(lambda x: x.strip(','))
-        df_norma = df_norma[['DESCRIPCION']]
+        df_norma = df_norma[['DESCRIPCION', 'PIEZAS SOLICITADAS']]
 
     df_norma = df_norma.drop_duplicates()
     df_norma.to_csv(nombre_archivo_salida, index=False)
