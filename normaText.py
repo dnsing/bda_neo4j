@@ -45,12 +45,14 @@ for i, file in enumerate(files_path):
     df_norma = compress(df_norma, compress_columns[i])
     if i == 0:
         df_norma['TIPO DE FARMACO'] = df_norma['TIPO DE FARMACO'].apply(lambda x: 'ORIGINAL' if 'ETICA' in x else 'GENERICO')
-        df_norma = df_norma.drop(['ESTADO','APORTACION DEL BENEFICIARIO','NOMBRE DE LA AGRUPACION HOMOGENEA DEL PRODUCTO SANITARIO','DIAGNOSTICO HOSPITALARIO','ESPECIAL CONTROL MEDICO'], axis=1)
+        df_norma = df_norma.drop(['APORTACION DEL BENEFICIARIO','NOMBRE DE LA AGRUPACION HOMOGENEA DEL PRODUCTO SANITARIO','DIAGNOSTICO HOSPITALARIO','ESPECIAL CONTROL MEDICO'], axis=1)
+    elif i == 2:
+        df_norma['CODIGO DE MEDICAMENTO'] = df_norma['CODIGO DE MEDICAMENTO'].astype(str).str.split('-').str[0]
     elif i == 3:
-         df_norma = df_norma.drop(['ATC','FORMA FARMACEUTICA','DETALLES DEL PRODUCTO','TAMANO DE CAJA O PRESENTACION','PRECIO MAXIMO DE VENTA TRANSACCION FINAL COMERCIAL'], axis=1)
+         df_norma = df_norma.drop(['ATC','FORMA FARMACEUTICA','DETALLES DEL PRODUCTO','TAMANO DE CAJA O PRESENTACION'], axis=1)
     elif i == 4:
         df_norma['DESCRIPCION'] = df_norma['DESCRIPCION'].map(lambda x: x.strip(','))
-        df_norma = df_norma[['DESCRIPCION', 'PIEZAS SOLICITADAS']]
+        df_norma = df_norma[['SERVICIO','DESCRIPCION', 'PIEZAS SOLICITADAS']]
 
     df_norma = df_norma.drop_duplicates()
     df_norma.to_csv(nombre_archivo_salida, index=False)

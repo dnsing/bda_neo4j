@@ -8,7 +8,7 @@ def create_nodes_f1(tx, data):
         "NOMBRE_DEL_PRODUCTO_FARMACEUTICO: $nombre_producto, "
         "TIPO_DE_FARMACO: $tipo_farmaco, "
         "NOMBRE_DEL_LABORATORIO_OFERTANTE: $nombre_laboratorio, "
-        # "ESTADO: $estado, "
+        "ESTADO: $estado, "
         # "APORTACION_DEL_BENEFICIARIO: $aportacion, "
         "PRINCIPIO_ACTIVO: $principio_activo, "
         "PRECIO_VENTA_CON_IVA_EUROS: $precio_euros, "
@@ -52,8 +52,8 @@ def create_nodes_f4(tx, data):
         # "DETALLES_DEL_PRODUCTO: $detalles_del_producto, "
         "PRESENTACION: $presentacion, "
         # "TAMANO_DE_CAJA_O_PRESENTACION: $tamano_de_caja, "
-        "FABRICANTE: $fabricante "
-        # "PRECIO_MAXIMO_DE_VENTA: $precio_maximo_de_venta"
+        "FABRICANTE: $fabricante, "
+        "PRECIO_MAXIMO_DE_VENTA: $precio_maximo_de_venta"
         "})"
     )
 
@@ -64,7 +64,7 @@ def create_nodes_f6(tx, data):
         f"CREATE (n:Medication {{"
         # "MES: $mes, "
         # "FECHA: $fecha, "
-        # "SERVICIO: $servicio, "
+        "SERVICIO: $servicio, "
         "DESCRIPCION: $descripcion, "
         # "TIPO: $tipo, "
         # "UNIDAD: $unidad, "
@@ -99,7 +99,7 @@ def file1():
                     "nombre_producto": row["NOMBRE DEL PRODUCTO FARMACEUTICO"],
                     "tipo_farmaco": row["TIPO DE FARMACO"],
                     "nombre_laboratorio": row["NOMBRE DEL LABORATORIO OFERTANTE"],
-                    # "estado": row["ESTADO"],
+                    "estado": row["ESTADO"],
                     # "aportacion": row["APORTACION DEL BENEFICIARIO"],
                     "principio_activo": row["PRINCIPIO ACTIVO O ASOCIACION DE PRINCIPIOS ACTIVOS"],
                     "precio_euros": row["PRECIO VENTA CON IVA_EUROS"],
@@ -142,8 +142,8 @@ def file4():
                     # "detalles_del_producto": row["DETALLES DEL PRODUCTO"],
                     "presentacion": row["PRESENTACION"],
                     # "tamano_de_caja": row["TAMANO DE CAJA O PRESENTACION"],
-                    "fabricante": row["FABRICANTE"]
-                    # "precio_maximo_de_venta": row["PRECIO MAXIMO DE VENTA TRANSACCION FINAL COMERCIAL"]
+                    "fabricante": row["FABRICANTE"],
+                    "precio_maximo_de_venta": row["PRECIO MAXIMO DE VENTA TRANSACCION FINAL COMERCIAL"]
                 }
                 session.write_transaction(create_nodes_f4, data)               
 def file6():
@@ -154,7 +154,7 @@ def file6():
                 data = {
                     # "mes": row["MES"],
                     # "fecha": row["FECHA"],
-                    # "servicio": row["SERVICIO"],
+                    "servicio": row["SERVICIO"],
                     "descripcion": row["DESCRIPCION"],
                     # "tipo": row["TIPO"],
                     # "unidad": row["UNIDAD"],
@@ -165,11 +165,11 @@ def file6():
                 }
                 session.write_transaction(create_nodes_f6, data)
 
-# file1()
-# file2()
-# file3()
-# file4()
-# file6()
+file1()
+file2()
+file3()
+file4()
+file6()
 
 def consulta1():
     result = []
@@ -179,20 +179,15 @@ def consulta1():
         with driver.session() as session:
             # Cypher query
             query = """
-            MATCH (m:Medication), (p:PharmaceuticalProductInfo)
-            WHERE m.DESCRIPCION <> p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO
-            CREATE (m)-[:MISMATCH]->(p);
+                MATCH (m:Medication)
+                MATCH (ppi:PharmaceuticalProductInfo)
+                WHERE m.DESCRIPCION <> ppi.NOMBRE_DEL_PRODUCTO_FARMACEUTICO
 
-            MATCH (m:Medication), (p:PharmaceuticalProductInfo)
-            WHERE m.PRINCIPIO_ACTIVO_O_ASOCIACION_DE_PRINCIPIOS_ACTIVOS = p.DESCRIPCION_PRINCIPIO_ACTIVO
-            CREATE (m)-[:MATCH]->(p);
+                WITH m, ppi
+                MATCH(mi:MedicationInfo)
+                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = ppi.PRINCIPIO_ACTIVO
 
-            RETURN p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO AS PRODUCTO_FARMACEUTICO,
-                   m.PRINCIPIO_ACTIVO_O_ASOCIACION_DE_PRINCIPIOS_ACTIVOS AS PRINCIPIO_ACTIVO,
-                   p.NOMBRE_GENERICO AS NOMBRE_GENERICO,
-                   p.FABRICANTE AS FABRICANTE,
-                   p.TIPO_DE_FARMACO AS TIPO_DE_FARMACO,
-                   p.MEDICAMENTO_HUERFANO AS MEDICAMENTO_HUERFANO;
+                RETURN ppi.PRINCIPIO_ACTIVO
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
@@ -253,6 +248,83 @@ def consulta3(input_value):
 # for record in result:
 #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
+
+def consulta3(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (m:Medication)
+                MATCH (ppi:PharmaceuticalProductInfo)
+                WHERE ppi.PRINCIPIO_ACTIVO = m.DESCRIPCION
+                MATCH (mi:MedicationInfo)
+                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = m.DESCRIPCION
+                WITH m.SERVICIO AS servicio, m.PIEZAS_SOLICITADAS AS piezasSolicitadas, m.DESCRIPCION AS DESCRIPCION, ppi.PRECIO_VENTA_CON_IVA_EUROS AS PRECIO, mi.PRECIO_MAXIMO_DE_VENTA AS ES_REGULADO
+                ORDER BY piezasSolicitadas DESC
+                RETURN servicio, COLLECT(piezasSolicitadas)[..5] AS top5PiezasSolicitadas, DESCRIPCION, PRECIO, ES_REGULADO
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+def consulta5(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (ppi:PharmaceuticalProductInfo)
+                WHERE ppi.PRINCIPIO_ACTIVO = $input
+
+                MATCH (mi:MedicationInfo)
+                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = ppi.PRINCIPIO_ACTIVO
+
+                MATCH (mc:MedicationCode)
+                WHERE mc.NOMBRE = ppi.PRINCIPIO_ACTIVO
+
+                MATCH (mg:MedicationGroup)
+                WHERE mg.GRUPO = toInteger(mc.CODIGO_DE_MEDICAMENTO)
+
+                RETURN ppi.PRINCIPIO_ACTIVO AS PRINCIPIO_ACTIVO,
+                        ppi.NOMBRE_DEL_LABORATORIO_OFERTANTE AS OFERTANTE,
+                        mi.FABRICANTE AS FABRICANTE,
+                        mi.PRESENTACION AS PRESENTACION,
+                        mg.DESCRIPCION AS DESCRIPCION;
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+# result = consulta5('FORMOTEROL')
+# for record in result:
+#     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
+#     print("LABORATORIO OFERTANTE:", record["NOMBRE_DEL_LABORATORIO_OFERTANTE"])
+#     print("FABRICANTE:", record["FABRICANTE"])
+#     print("PRESENTACION:", record["PRESENTACION"])
+#     print("DESCRIPCION:", record["DESCRIPCION"])
+
+def consulta6():
+    result = []
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (p:PharmaceuticalProductInfo)
+                WHERE p.ESTADO = 'SUSPENSION TEMPORAL GENERAL'
+
+                MATCH (m:Medication)
+                WHERE m.DESCRIPCION = p.PRINCIPIO_ACTIVO
+
+                RETURN DISTINCT p.PRINCIPIO_ACTIVO AS PRINCIPIO_ACTIVO, COUNT(*) AS occurrence_count
+                ORDER BY occurrence_count DESC
+                LIMIT 10
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query)))
+    
+    return result
 
 def consulta7():
     result = []
