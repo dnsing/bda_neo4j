@@ -19,7 +19,6 @@ def create_nodes_f1(tx, data):
         "MEDICAMENTO_HUERFANO: $medicamento_huerfano"
         "})"
     )
-
     tx.run(query, **data)
     
 def create_nodes_f2(tx, data):
@@ -56,7 +55,7 @@ def create_nodes_f4(tx, data):
         "PRECIO_MAXIMO_DE_VENTA: $precio_maximo_de_venta"
         "})"
     )
-
+    
     tx.run(query, **data)
         
 def create_nodes_f6(tx, data):
@@ -74,23 +73,14 @@ def create_nodes_f6(tx, data):
         # "MARCA: $marca"
         "})"
     )
-
     tx.run(query, **data)
-
-# Load the data from the CSV file
-df1 = pd.read_csv("Fuentes para proyecto 2 normalizado\\1.1_Nombre_de_productos_genéricos_y_Farmaceutica.csv")
-df2 = pd.read_csv("Fuentes para proyecto 2 normalizado\\2._Catálogo_de_Categorías_de_Medicamentos_CCSS.csv")
-df3 = pd.read_csv("Fuentes para proyecto 2 normalizado\\3._muestra_Medicamentos_CCSS_clasificados.csv")
-df4 = pd.read_csv("Fuentes para proyecto 2 normalizado\\4._Principios_Activos_y_Presentación.csv")
-df6 = pd.read_csv("Fuentes para proyecto 2 normalizado\\6-Medicamentos_adquiridos_por_hospital.csv")
-
-
+    
 # Connect to your Neo4j database
 uri = "bolt://localhost:7687"  # Replace with your Neo4j server URI
 username = "neo4j"  # Replace with your Neo4j username
 password = "proyecto2"  # Replace with your Neo4j password
 
-def file1():
+def file1(df1):
     # Create nodes in Neo4j
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
@@ -111,7 +101,7 @@ def file1():
                 }
                 session.write_transaction(create_nodes_f1, data)
                 
-def file2():
+def file2(df2):
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             for _, row in df2.iterrows():
@@ -121,7 +111,7 @@ def file2():
                 }
                 session.write_transaction(create_nodes_f2, data)
                 
-def file3():
+def file3(df3):
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             for _, row in df3.iterrows():
@@ -130,7 +120,7 @@ def file3():
                     "codigo_de_medicamento": row["CODIGO DE MEDICAMENTO"]
                 }
                 session.write_transaction(create_nodes_f3, data)
-def file4():
+def file4(df4):
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             for _, row in df4.iterrows():
@@ -146,7 +136,7 @@ def file4():
                     "precio_maximo_de_venta": row["PRECIO MAXIMO DE VENTA TRANSACCION FINAL COMERCIAL"]
                 }
                 session.write_transaction(create_nodes_f4, data)               
-def file6():
+def file6(df6):
     # Create nodes in Neo4j
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
@@ -164,12 +154,30 @@ def file6():
                     # "marca": row["MARCA"]
                 }
                 session.write_transaction(create_nodes_f6, data)
-
-file1()
-file2()
-file3()
-file4()
-file6()
+def execute(path_list):
+    print('Cargando datos a Neo4j')
+    
+    # Load the data from the CSV file
+    df1 = pd.read_csv(path_list[0].replace('archivos_csv','archivos_norma_csv'))
+    df2 = pd.read_csv(path_list[1].replace('archivos_csv','archivos_norma_csv'))
+    df3 = pd.read_csv(path_list[2].replace('archivos_csv','archivos_norma_csv'))
+    df4 = pd.read_csv(path_list[3].replace('archivos_csv','archivos_norma_csv'))
+    df6 = pd.read_csv(path_list[4].replace('archivos_csv','archivos_norma_csv'))
+    
+    # 
+    print('Primer Archivo')
+    file1(df1)
+    print('Segundo Archivo')
+    file2(df2)
+    print('Tercer Archivo')
+    file3(df3)
+    print('Cuarto Archivo')
+    file4(df4)
+    print('Sexto Archivo')
+    file6(df6)
+    
+# path_list = ['static/archivos_csv\\1.1_Nombre_de_productos_genéricos_y_Farmaceutica.csv', 'static/archivos_csv\\2._Catálogo_de_Categorías_de_Medicamentos_CCSS.csv', 'static/archivos_csv\\3._muestra_Medicamentos_CCSS_clasificados.csv', 'static/archivos_csv\\4._Principios_Activos_y_Presentación.csv', 'static/archivos_csv\\6-Medicamentos_adquiridos_por_hospital.csv']
+# execute(path_list)
 
 def consulta1():
     result = []

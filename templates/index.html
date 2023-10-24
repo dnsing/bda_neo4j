@@ -1,14 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cargar CSV</title>
-</head>
 <body>
     <h1>Cargar archivos CSV</h1>
     <form method="POST" action="/cargar_csv" enctype="multipart/form-data">
         <input type="file" name="archivos_csv" accept=".csv" multiple>
-        <input type="submit" value="Cargar">
+        <input type="submit" value="Cargar" onclick="mostrarCargando()">
     </form>
-    <a href="/consultas">Consultas</a>
+    
+    <div id="cargando" style="display: none;">
+        Cargando archivos... Por favor, espere.
+    </div>
+    
+    <script>
+        function mostrarCargando() {
+            // Mostrar el mensaje de "Cargando" mientras se envían los archivos
+            document.getElementById('cargando').style.display = 'block';
+        }
+    </script>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <a href="/consultas">Ir a Consultas</a>  <!-- Agrega un enlace a la página de consultas -->
+        {% endif %}
+    {% endwith %}
 </body>
-</html>
