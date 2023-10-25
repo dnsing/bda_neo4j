@@ -6,36 +6,18 @@
 <body>
     <h1>Resultado de la Consulta {{ consulta }}</h1>
     <p>Aquí se muestran los resultados de la Consulta {{ consulta }}.</p>
-
-    <!-- Contenido específico de la consulta -->
-    {% if consulta == 1 %}
-        <p>Resultados de la Consulta 1</p>
-        <!-- Agrega aquí el contenido específico de la Consulta 1 -->
-    {% elif consulta == 2 %}
-        <p>Resultados de la Consulta 2</p>
+    <p>Resultados de la Consulta {{ consulta }}</p>
         <head>
-            <title>Records</title>
+            <title>Resultados</title>
         </head>
         <body>
-            <h1>Records</h1>
+            <h1>Resultados</h1>
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                </tr>
-                {% for record in records %}
-                    <tr>
-                        <td>{{ record }}</td>
-                    </tr>
-                {% endfor %}
+                <h1>Tabla de Datos</h1>
+                <div>
+                    {{ tabla_html | safe }}
+                </div>
             </table>
-        <!-- Agrega aquí el contenido específico de la Consulta 2 -->
-    {% elif consulta == 3 %}
-        <p>Resultados de la Consulta 3</p>
-        <!-- Agrega aquí el contenido específico de la Consulta 3 -->
-    {% else %}
-        <p>Consulta no válida.</p>
-    {% endif %}
 
     <p><a href="/consultas">Volver a la lista de consultas</a></p>
 </body>

@@ -257,7 +257,7 @@ def consulta3(input_value):
 #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
 
-def consulta3(input_value):
+def consulta4():
     result = []
 
     # Connect to the Neo4j database
@@ -273,9 +273,14 @@ def consulta3(input_value):
                 ORDER BY piezasSolicitadas DESC
                 RETURN servicio, COLLECT(piezasSolicitadas)[..5] AS top5PiezasSolicitadas, DESCRIPCION, PRECIO, ES_REGULADO
             """
-            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+            result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
+
+# result = consulta4()
+# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
+# print(df)
+
 
 def consulta5(input_value):
     result = []
@@ -334,6 +339,11 @@ def consulta6():
     
     return result
 
+# result = consulta6()
+# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
+# print(df)
+
+
 def consulta7():
     result = []
     # Connect to the Neo4j database
@@ -353,6 +363,10 @@ def consulta7():
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
+
+# result = consulta7()
+# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
+# print(df)
 
 def consulta8():
     result = []
@@ -375,6 +389,10 @@ def consulta8():
     
     return result
 
+# result = consulta8()
+# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
+# print(df)
+
 def consulta9():
     result = []
 
@@ -389,3 +407,7 @@ def consulta9():
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
+
+# result = consulta9()
+# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
+# print(df)
