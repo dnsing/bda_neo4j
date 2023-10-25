@@ -78,7 +78,7 @@ def create_nodes_f6(tx, data):
 # Connect to your Neo4j database
 uri = "bolt://localhost:7687"  # Replace with your Neo4j server URI
 username = "neo4j"  # Replace with your Neo4j username
-password = "proyecto2"  # Replace with your Neo4j password
+password = "password"  # Replace with your Neo4j password
 
 def file1(df1):
     # Create nodes in Neo4j
@@ -222,65 +222,88 @@ def consulta2():
             query = """
             MATCH (p:PharmaceuticalProductInfo)
             WHERE NOT EXISTS {
-              MATCH (m:Medication {DESCRIPCION: p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO})
-            }
-            RETURN DISTINCT p.NOMBRE_DEL_LABORATORIO_OFERTANTE;
+                MATCH (m:MedicationCode{DESCRIPCION: p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO})
+                }
+            RETURN DISTINCT p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO, p.NOMBRE_DEL_LABORATORIO_OFERTANTE;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
 
-# result = consulta2()
-# for record in result:
-#     print(record["p.NOMBRE_DEL_LABORATORIO_OFERTANTE"])
+#result = consulta2()
+#for record in result:
+#    print(record["p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO"], "|||", record["p.NOMBRE_DEL_LABORATORIO_OFERTANTE"])
 
-def consulta3(input_value):
+# =============================================================================
+# def consulta3(input_value):
+#     result = []
+# 
+#     # Connect to the Neo4j database
+#     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+#         with driver.session() as session:
+#             query = """
+#                 MATCH (m:MedicationInfo)
+#                 WHERE m.DESCRIPCION_PRINCIPIO_ACTIVO = $input
+#                 WITH m
+#                 MATCH (n:MedicationInfo)
+#                 WHERE m.NOMBRE_GENERICO = n.DESCRIPCION_PRINCIPIO_ACTIVO
+#                 RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO;
+#             """
+#             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+#     
+#     return result
+# 
+# # result = consulta3('EXEMESTANO')
+# # for record in result:
+# #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
+# #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
+# =============================================================================
+
+#Se le agrego 2 tipos de posibles inputs controlados por la bandera flagConsulta3
+#La idea es que si es 0 el input es un principio activo y si es 1 es un nombre genérico
+def consulta3(input_value, flagConsulta3):
     result = []
-
+    queryPrinc_activo = '''
+        MATCH (m:MedicationInfo)
+        WHERE m.DESCRIPCION_PRINCIPIO_ACTIVO = $input
+        WITH m
+        MATCH (n:MedicationInfo)
+        WHERE m.NOMBRE_GENERICO = n.DESCRIPCION_PRINCIPIO_ACTIVO
+        RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO
+    '''
+    queryGenerico = '''
+        MATCH (o:MedicationInfo)
+        WHERE o.NOMBRE_GENERICO = $input
+        WITH o
+        MATCH (m:MedicationInfo)
+        WHERE m.DESCRIPCION_PRINCIPIO_ACTIVO = o.DESCRIPCION_PRINCIPIO_ACTIVO
+        WITH m
+        MATCH (n:MedicationInfo)
+        WHERE m.NOMBRE_GENERICO = n.DESCRIPCION_PRINCIPIO_ACTIVO
+        RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO
+    '''
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
-            query = """
-                MATCH (m:MedicationInfo)
-                WHERE m.DESCRIPCION_PRINCIPIO_ACTIVO = $input
-                WITH m
-                MATCH (n:MedicationInfo)
-                WHERE m.NOMBRE_GENERICO = n.DESCRIPCION_PRINCIPIO_ACTIVO
-                RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO;
-            """
+            if flagConsulta3 == 0:
+                query = queryPrinc_activo
+            else:
+                query = queryGenerico
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
     
     return result
 
-# result = consulta3('EXEMESTANO')
+
+# result = consulta3('IBUPROFENO', 0)
 # for record in result:
 #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
 
-def consulta4():
-    result = []
 
-    # Connect to the Neo4j database
-    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
-        with driver.session() as session:
-            query = """
-                MATCH (m:Medication)
-                MATCH (ppi:PharmaceuticalProductInfo)
-                WHERE ppi.PRINCIPIO_ACTIVO = m.DESCRIPCION
-                MATCH (mi:MedicationInfo)
-                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = m.DESCRIPCION
-                WITH m.SERVICIO AS servicio, m.PIEZAS_SOLICITADAS AS piezasSolicitadas, m.DESCRIPCION AS DESCRIPCION, ppi.PRECIO_VENTA_CON_IVA_EUROS AS PRECIO, mi.PRECIO_MAXIMO_DE_VENTA AS ES_REGULADO
-                ORDER BY piezasSolicitadas DESC
-                RETURN servicio, COLLECT(piezasSolicitadas)[..5] AS top5PiezasSolicitadas, DESCRIPCION, PRECIO, ES_REGULADO
-            """
-            result = session.read_transaction(lambda tx: list(tx.run(query)))
-    
-    return result
-
-# result = consulta4()
-# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
-# print(df)
-
+# result = consulta3('BOLTALKEY', 1)
+# for record in result:
+#     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
+#     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
 
 def consulta5(input_value):
     result = []
@@ -339,11 +362,6 @@ def consulta6():
     
     return result
 
-# result = consulta6()
-# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
-# print(df)
-
-
 def consulta7():
     result = []
     # Connect to the Neo4j database
@@ -363,10 +381,6 @@ def consulta7():
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
-
-# result = consulta7()
-# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
-# print(df)
 
 def consulta8():
     result = []
@@ -389,10 +403,6 @@ def consulta8():
     
     return result
 
-# result = consulta8()
-# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
-# print(df)
-
 def consulta9():
     result = []
 
@@ -407,7 +417,3 @@ def consulta9():
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
-
-# result = consulta9()
-# df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
-# print(df)
