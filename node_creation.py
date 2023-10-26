@@ -179,6 +179,7 @@ def execute(path_list):
 # path_list = ['static/archivos_csv\\1.1_Nombre_de_productos_genéricos_y_Farmaceutica.csv', 'static/archivos_csv\\2._Catálogo_de_Categorías_de_Medicamentos_CCSS.csv', 'static/archivos_csv\\3._muestra_Medicamentos_CCSS_clasificados.csv', 'static/archivos_csv\\4._Principios_Activos_y_Presentación.csv', 'static/archivos_csv\\6-Medicamentos_adquiridos_por_hospital.csv']
 # execute(path_list)
 
+
 #FALTA
 def consulta1():
     result = []
@@ -212,7 +213,6 @@ def consulta1():
 #     print("MEDICAMENTO HUERFANO:", record["MEDICAMENTO_HUERFANO"])
 #     print()
 
-
 #LISTA
 # Function to execute the Cypher query and return the result
 def consulta2():
@@ -234,6 +234,7 @@ def consulta2():
 
 #result = consulta2()
 #for record in result:
+
 #    print(record["p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO"], " | ", record["p.NOMBRE_DEL_LABORATORIO_OFERTANTE"])
 
 # =============================================================================
@@ -260,6 +261,7 @@ def consulta2():
 # #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 # #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
 # =============================================================================
+
 
 #LISTA
 #Se le agrego 2 tipos de posibles inputs controlados por la bandera flagConsulta3
@@ -307,6 +309,7 @@ def consulta3(input_value, flagConsulta3):
 # for record in result:
 #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
+
 
 # =============================================================================
 # def consulta5(input_value):
@@ -406,7 +409,7 @@ def consulta5(input_value):
 # =============================================================================
 
 #LISTA
-#Camviamos la relación del archivo6 del hospital con el 3 muestras de meds de la CCSS
+#Cambiamos la relación del archivo6 del hospital con el 3 muestras de meds de la CCSS
 def consulta6():
     result = []
     # Connect to the Neo4j database
@@ -419,7 +422,7 @@ def consulta6():
                 WHERE m.PRINCIPIO_ACTIVO = n.NOMBRE 
                 RETURN DISTINCT m.PRINCIPIO_ACTIVO AS PRINCIPIO_ACTIVO, COUNT(*) AS occurrence_count
                 ORDER BY occurrence_count DESC
-                LIMIT 10 
+                LIMIT 10
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
@@ -502,6 +505,7 @@ def consulta8():
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
+
 
 #FALTA
 def consulta9():

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado de Consulta</title>
+</head>
+<body>
+    <h1>Resultado de la Consulta {{ consulta }}</h1>
+    <p>Aquí se muestran los resultados de la Consulta {{ consulta }}.</p>
+    <p>Resultados de la Consulta {{ consulta }}</p>
+        <head>
+            <title>Resultados</title>
+        </head>
+        <body>
+            <h1>Resultados</h1>
+            <table>
+                <h1>Tabla de Datos</h1>
+                <div>
+                    {{ tabla_html | safe }}
+                </div>
+            </table>
+
+    <p><a href="/consultas">Volver a la lista de consultas</a></p>
+</body>
+</html>
