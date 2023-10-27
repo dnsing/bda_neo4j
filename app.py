@@ -67,7 +67,21 @@ def guardar_datos_en_txt(datos):
         for dato in datos:
             archivo_txt.write(f'{dato}\n')
 
-@app.route('/consulta/2')
+# @app.route('/consultas', methods=['GET', 'POST'])
+# def consultas():
+#     if request.method == 'POST':
+#         if request.form['consulta'] == '3':
+#             parametro1 = request.form['parametro1']
+#             parametro2 = request.form['parametro2']
+            
+#             # Realiza la "Consulta 3" con los parámetros recibidos
+#             # Puedes hacer la lógica de la consulta aquí
+            
+#             # Luego, muestra los resultados en una plantilla o de la manera que desees
+            
+#     return render_template('consultas.html')
+
+@app.route('/consulta/2', methods=['POST'])
 def consulta_2():
     num_consulta = 2
     result = consulta2()
@@ -76,10 +90,13 @@ def consulta_2():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/3')
+@app.route('/consulta/3', methods=['POST'])
 def consulta_3():
+    if request.method == 'POST':
+        producto_principio = request.form['parametro1']
+        isMed = (1 if request.form['parametro2'] == 'principio' else 0)
     num_consulta = 3
-    result = consulta3('EXEMESTANO')
+    result = consulta3(producto_principio, isMed)
     df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
     tabla_html = df.to_html(classes='table table-bordered', index=False, escape=False)
 
@@ -94,16 +111,18 @@ def consulta_4():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/5')
+@app.route('/consulta/5', methods=['POST'])
 def consulta_5():
+    if request.method == 'POST':
+        principioActivo = request.form['parametro3']
     num_consulta = 5
-    result = consulta5('FORMOTEROL')
+    result = consulta5(principioActivo)
     df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
     tabla_html = df.to_html(classes='table table-bordered', index=False, escape=False)
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/6')
+@app.route('/consulta/6', methods=['POST'])
 def consulta_6():
     num_consulta = 6
     result = consulta6()
@@ -112,7 +131,7 @@ def consulta_6():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/7')
+@app.route('/consulta/7', methods=['POST'])
 def consulta_7():
     num_consulta = 7
     result = consulta7()
@@ -121,7 +140,7 @@ def consulta_7():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/8')
+@app.route('/consulta/8', methods=['POST'])
 def consulta_8():
     num_consulta = 8
     result = consulta8()
@@ -130,7 +149,7 @@ def consulta_8():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/9')
+@app.route('/consulta/9', methods=['POST'])
 def consulta_9():
     num_consulta = 9
     result = consulta9()
@@ -140,7 +159,7 @@ def consulta_9():
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
 @app.route('/consultas', methods=['GET', 'POST'])
-def consultas():
+def consultas_CRUD():
     if request.method == 'POST':
         operacion = request.form.get('operacion')
         datos = cargar_datos_desde_txt()

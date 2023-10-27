@@ -1,46 +1,46 @@
-GRUPO,DESCRIPCIÓN
-1,Amebicidas y antihelmínticos
-2,Antibióticos
-3,Antituberculosos
-4,Antifúngicos y antivirales
-5,Antisepticos y agentes urinarios
-6,Adrenérgicos
-7,Agentes cardiacos
-8,Antihipertensivos
-9,Diuréticos
-10,Vasodilatadores coronarios y antianginosos
-11,"Agentes anticoagulantes, trombolíticos y antiplaquetarios"
-12,Hemostáticos
-13,Antianémicos e hipolipemiantes
-14,"Antiinflamatorios no esteroideos, antirreumáticos, y agentes mineralizantes"
-15,"Uricosúricos, antigotosos"
-16,Analgésicos no narcóticos
-17,Analgésicos narcóticos y antagonistas
-18,Anestésicos generales
-19,Anestésicos locales
-20,Relajantes musculares
-21,Anticolinérgicos/antiespasmódicos
-22,Colinérgicos
-23,Antiasmáticos y broncodilatadores
-24,"Antitusígenos, fluidificantes y expectorantes"
-25,"Antihistamínicos, antieméticos, antipruríticos"
-26,Antiparkinsonianos
-27,Antimigraña
-28,Anticonvulsivos
-29,Antidepresivos y psicoestimulantes
-30,Antipsicóticos
-31,"Sedantes/hipnóticos, ansiolíticos"
-32,"Agentes gastrointestinales, antiácidos y antagonistas del receptor"
-33,Antidiarreicos y laxantes
-34,Corticosteroides
-35,Andrógenos y anabólicos
-36,"Estrógenos, progestágenos, anovulatorios"
-37,Oxitóxicos y tocolíticos
-38,"Hormonas hipotalámicas, pituitarias y otros agentes"
-39,Hipoglicemiantes e hiperglicemiantes
-40,Hormonas tiroideas y drogas antitiroideas
-41,Antineoplásicos y agentes inmunomoduladores
-42,Vitaminas
-43,Electrolitos y soluciones parenterales
-44,"Biológicos, vacunas, toxoides y antitoxinas"
-45,Agentes oftalmológicos
+GRUPO,DESCRIPCION
+1,AMEBICIDAS Y ANTIHELMINTICOS
+2,ANTIBIOTICOS
+3,ANTITUBERCULOSOS
+4,ANTIFUNGICOS Y ANTIVIRALES
+5,ANTISEPTICOS Y AGENTES URINARIOS
+6,ADRENERGICOS
+7,AGENTES CARDIACOS
+8,ANTIHIPERTENSIVOS
+9,DIURETICOS
+10,VASODILATADORES CORONARIOS Y ANTIANGINOSOS
+11,AGENTES ANTICOAGULANTES TROMBOLITICOS Y ANTIPLAQUETARIOS
+12,HEMOSTATICOS
+13,ANTIANEMICOS E HIPOLIPEMIANTES
+14,ANTIINFLAMATORIOS NO ESTEROIDEOS ANTIRREUMATICOS Y AGENTES MINERALIZANTES
+15,URICOSURICOS ANTIGOTOSOS
+16,ANALGESICOS NO NARCOTICOS
+17,ANALGESICOS NARCOTICOS Y ANTAGONISTAS
+18,ANESTESICOS GENERALES
+19,ANESTESICOS LOCALES
+20,RELAJANTES MUSCULARES
+21,ANTICOLINERGICOS/ANTIESPASMODICOS
+22,COLINERGICOS
+23,ANTIASMATICOS Y BRONCODILATADORES
+24,ANTITUSIGENOS FLUIDIFICANTES Y EXPECTORANTES
+25,ANTIHISTAMINICOS ANTIEMETICOS ANTIPRURITICOS
+26,ANTIPARKINSONIANOS
+27,ANTIMIGRANA
+28,ANTICONVULSIVOS
+29,ANTIDEPRESIVOS Y PSICOESTIMULANTES
+30,ANTIPSICOTICOS
+31,SEDANTES/HIPNOTICOS ANSIOLITICOS
+32,"AGENTES GASTROINTESTINALES, ANTIS Y ANTAGONISTAS DEL RECEPTOR"
+33,ANTIDIARREICOS Y LAXANTES
+34,CORTICOSTEROIDES
+35,ANDROGENOS Y ANABOLICOS
+36,ESTROGENOS PROGESTAGENOS ANOVULATORIOS
+37,OXITOXICOS Y TOCOLITICOS
+38,HORMONAS HIPOTALAMICAS PITUITARIAS Y OTROS AGENTES
+39,HIPOGLICEMIANTES E HIPERGLICEMIANTES
+40,HORMONAS TIROIDEAS Y DROGAS ANTITIROIDEAS
+41,ANTINEOPLASICOS Y AGENTES INMUNOMODULADORES
+42,VITAMINAS
+43,ELECTROLITOS Y SOLUCIONES PARENTERALES
+44,BIOLOGICOS VACUNAS TOXOIDES Y ANTITOXINAS
+45,AGENTES OFTALMOLOGICOS

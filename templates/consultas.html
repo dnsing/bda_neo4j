@@ -6,15 +6,60 @@
 <body>
     <h1>Consultas Disponibles</h1>
     <ul>
-        <li><a href="/consulta/1">Consulta 1</a></li>
-        <li><a href="/consulta/2">Consulta 2</a></li>
-        <li><a href="/consulta/3">Consulta 3</a></li>
-        <li><a href="/consulta/4">Consulta 4</a></li>
-        <li><a href="/consulta/5">Consulta 5</a></li>
-        <li><a href="/consulta/6">Consulta 6</a></li>
-        <li><a href="/consulta/7">Consulta 7</a></li>
-        <li><a href="/consulta/8">Consulta 8</a></li>
-        <li><a href="/consulta/9">Consulta 9</a></li>
+        <h1>#1: Reporte de medicamentos que potencialmente podría adquirir la CCSS.</h1>
+        <form method="post" action="/consulta/1">
+            <button type="submit">Ejecutar</button>
+        </form>
+
+        <h1>#2: Posibles proveedores de medicamentos.</h1>
+        <form method="post" action="/consulta/2">
+            <button type="submit">Ejecutar</button>
+        </form>
+
+        <h1>#3: Búsqueda de medicamentos bioequivalentes.</h1>
+        <form method="post" action="/consulta/3">
+            <label for="parametro1">Nombre de Medicamento/Principio Activo:</label>
+            <input type="text" id="parametro1" name="parametro1">
+
+            <label for="parametro2"></label>
+            <select id="parametro2" name="parametro2">
+                <option value="medicamento">Nombre de Medicamento</option>
+                <option value="principio">Principio Activo</option>
+            </select>
+            <button type="submit">Ejecutar</button>
+        </form>
+        
+        <h1>#4: Top 5 de medicamentos o suministros solicitados por cada departamento del hospital.</h1>
+        <form method="post" action="/consulta/4">
+            <button type="submit">Ejecutar</button>
+        </form>
+        
+        <h1>#5: Fabricantes y ofertantes que trabajan con el producto.</h1>
+        <form method="post" action="/consulta/5">
+            <label for="parametro3">Principio Activo:</label>
+            <input type="text" id="parametro3" name="parametro3">
+            <button type="submit">Ejecutar</button>
+        </form>
+
+        <h1>#6: Top 10 de principios activos que han sido suspendidos para uso comercial, y cuáles medicamentos lo contienen en los que usa la CCSS.</h1>
+        <form method="post" action="/consulta/6">
+            <button type="submit">Ejecutar</button>
+        </form>
+
+        <h1>#7: Listar los medicamentos para tratamientos de larga duración y los posibles reemplazos.</h1>
+        <form method="post" action="/consulta/7">
+            <button type="submit">Ejecutar</button>
+        </form>
+
+        <h1>#8: Top 10 de principios activos que son producidos por más fabricantes.</h1>
+        <form method="post" action="/consulta/8">
+            <button type="submit">Ejecutar</button>
+        </form>
+
+        <h1>#9: Productos de un fabricante que actualmente no están en la CCSS.</h1>
+        <form method="post" action="/consulta/9">
+            <button type="submit">Ejecutar</button>
+        </form>
     </ul>
 </body>
 </html>

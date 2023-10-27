@@ -78,7 +78,7 @@ def create_nodes_f6(tx, data):
 # Connect to your Neo4j database
 uri = "bolt://localhost:7687"  # Replace with your Neo4j server URI
 username = "neo4j"  # Replace with your Neo4j username
-password = "password"  # Replace with your Neo4j password
+password = "proyecto2"  # Replace with your Neo4j password
 
 def file1(df1):
     # Create nodes in Neo4j
