@@ -180,7 +180,7 @@ def execute(path_list):
 # execute(path_list)
 
 
-#FALTA
+#LISTA
 def consulta1():
     result = []
     
@@ -189,15 +189,13 @@ def consulta1():
         with driver.session() as session:
             # Cypher query
             query = """
-                MATCH (m:Medication)
-                MATCH (ppi:PharmaceuticalProductInfo)
-                WHERE m.DESCRIPCION <> ppi.NOMBRE_DEL_PRODUCTO_FARMACEUTICO
-
-                WITH m, ppi
+                MATCH (p:PharmaceuticalProductInfo)
+                WHERE NOT EXISTS {
+                    MATCH (m:MedicationCode{DESCRIPCION: p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO})
+                    }
                 MATCH(mi:MedicationInfo)
-                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = ppi.PRINCIPIO_ACTIVO
-
-                RETURN ppi.PRINCIPIO_ACTIVO
+                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = p.PRINCIPIO_ACTIVO              
+                RETURN DISTINCT p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO AS NOMBRE, p.PRINCIPIO_ACTIVO as PRINCIPIO_ACTIVO, mi.NOMBRE_GENERICO AS NOMBRE_GENERICO, mi.FABRICANTE AS FABRICANTE, p.TIPO_DE_FARMACO AS TIPO_DE_FARMACO, p.MEDICAMENTO_HUERFANO AS MEDICAMENTO_HUERFANO
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
@@ -212,6 +210,7 @@ def consulta1():
 #     print("TIPO DE FARMACO:", record["TIPO_DE_FARMACO"])
 #     print("MEDICAMENTO HUERFANO:", record["MEDICAMENTO_HUERFANO"])
 #     print()
+#--------------------------------------------------------------------------------------------------------------------------------------------
 
 #LISTA
 # Function to execute the Cypher query and return the result
@@ -261,7 +260,7 @@ def consulta2():
 # #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 # #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
 # =============================================================================
-
+#--------------------------------------------------------------------------------------------------------------------------------------------
 
 #LISTA
 #Se le agrego 2 tipos de posibles inputs controlados por la bandera flagConsulta3
@@ -309,7 +308,40 @@ def consulta3(input_value, flagConsulta3):
 # for record in result:
 #     print("DESCRIPCION PRINCIPIO ACTIVO:", record["DESCRIPCION_PRINCIPIO_ACTIVO"])
 #     print("NOMBRE GENERIC0:", record["NOMBRE_GENERICO"])
+#--------------------------------------------------------------------------------------------------------------------------------------------
 
+#LISTA
+#Cambiamos la relación del archivo6 del hospital con el 3 muestras de meds de la CCSS
+def consulta4():
+    result = []
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (m:Medication)
+                MATCH (ppi:PharmaceuticalProductInfo)
+                WHERE ppi.PRINCIPIO_ACTIVO = m.DESCRIPCION
+
+                MATCH (mi:MedicationInfo)
+                WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = m.DESCRIPCION
+
+                WITH m.SERVICIO AS servicio, ppi.NOMBRE_DEL_PRODUCTO_FARMACEUTICO AS nombreProducto,
+                    ppi.NOMBRE_DEL_LABORATORIO_OFERTANTE AS laboratorio,
+                    ppi.PRECIO_VENTA_CON_IVA_EUROS AS precioVentaEuros,
+                    mi.PRECIO_MAXIMO_DE_VENTA AS precioMaximo, m.PIEZAS_SOLICITADAS AS piezasSolicitadas
+                    ORDER BY piezasSolicitadas DESC
+
+                WITH servicio, 
+                    laboratorio,
+                    precioVentaEuros,
+                    precioMaximo,
+                    COLLECT(DISTINCT nombreProducto)[0..5] AS top5Productos
+                                            
+                RETURN servicio, laboratorio, top5Productos, precioVentaEuros, precioMaximo
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query)))
+    
+    return result
 
 # =============================================================================
 # def consulta5(input_value):
@@ -349,6 +381,8 @@ def consulta3(input_value, flagConsulta3):
 # #     print("PRESENTACION:", record["PRESENTACION"])
 # #     print("DESCRIPCION:", record["DESCRIPCION"])
 # =============================================================================
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
 
 #LISTA
 #Lo que se le cambió fue la forma en la que se relaciona el archivo de los meds de la CCSS
@@ -407,6 +441,8 @@ def consulta5(input_value):
 #     
 #     return result
 # =============================================================================
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
 
 #LISTA
 #Cambiamos la relación del archivo6 del hospital con el 3 muestras de meds de la CCSS
@@ -482,9 +518,9 @@ def consulta7():
 #     print("NOMBRE:", record["NOMBRE"])
 #     print("NOMBRE GENERICO:", record["NOMBRE_GENERICO"])
 #     print("PADECIMIENTO:", record["PADECIMIENTO"])
+#--------------------------------------------------------------------------------------------------------------------------------------------
 
-
-#FALTA
+#LISTA
 def consulta8():
     result = []
 
@@ -492,23 +528,25 @@ def consulta8():
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             query = """
-                MATCH (p:PharmaceuticalProductInfo)
-                WHERE p.TRATAMIENTO_DE_LARGA_DURACION = 'SI'
-                WITH p
-                MATCH (p1:MedicationCode)
-                WHERE p.PRINCIPIO_ACTIVO = p1.NOMBRE
-                WITH p1
-                MATCH (p2:MedicationInfo)
-                WHERE p2.DESCRIPCION_PRINCIPIO_ACTIVO = p1.NOMBRE
-                RETURN p1.NOMBRE AS NOMBRE, p2.NOMBRE_GENERICO AS NOMBRE_GENERICO;
+                MATCH (mi:MedicationInfo)
+                WITH  mi.DESCRIPCION_PRINCIPIO_ACTIVO AS PRINCIPIO_ACTIVO, COUNT (DISTINCT mi.FABRICANTE) AS CANTIDAD_FABRICANTES
+                ORDER BY CANTIDAD_FABRICANTES DESC
+                RETURN PRINCIPIO_ACTIVO, CANTIDAD_FABRICANTES 
+                LIMIT 10;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
     return result
 
+# result = consulta8()
+# for record in result:
+#     print("PRINCIPIO ACTIVO:", record["PRINCIPIO_ACTIVO"])
+#     print("CANTIDAD FABRICANTES:", record["CANTIDAD_FABRICANTES"])
+#     print()
+#--------------------------------------------------------------------------------------------------------------------------------------------
 
-#FALTA
-def consulta9():
+#LISTA
+def consulta9(input_value):
     result = []
 
     # Connect to the Neo4j database
@@ -516,9 +554,12 @@ def consulta9():
         with driver.session() as session:
             query = """
                 MATCH (mi:MedicationInfo)
-                WHERE NOT EXISTS((mi)-[:RELATIONSHIP_NAME]->(:MedicationCode {NOMBRE: mi.DESCRIPCION_PRINCIPIO_ACTIVO}))
-                RETURN mi.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, mi.FABRICANTE AS FABRICANTE;
+                WHERE mi.FABRICANTE = $input
+                WITH mi
+                WHERE NOT EXISTS {MATCH(mc:MedicationCode{NOMBRE: mi.DESCRIPCION_PRINCIPIO_ACTIVO})}
+
+                RETURN DISTINCT mi.FABRICANTE, mi.DESCRIPCION_PRINCIPIO_ACTIVO
             """
-            result = session.read_transaction(lambda tx: list(tx.run(query)))
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
     
     return result

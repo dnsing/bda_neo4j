@@ -81,6 +81,16 @@ def guardar_datos_en_txt(datos):
             
 #     return render_template('consultas.html')
 
+
+@app.route('/consulta/1', methods=['POST'])
+def consulta_1():
+    num_consulta = 1
+    result = consulta1()
+    df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
+    tabla_html = df.to_html(classes='table table-bordered', index=False)
+
+    return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
+
 @app.route('/consulta/2', methods=['POST'])
 def consulta_2():
     num_consulta = 2
@@ -102,7 +112,7 @@ def consulta_3():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consulta/4')
+@app.route('/consulta/4', methods=['POST'])
 def consulta_4():
     num_consulta = 4
     result = consulta4()
@@ -151,8 +161,10 @@ def consulta_8():
 
 @app.route('/consulta/9', methods=['POST'])
 def consulta_9():
+    if request.method == 'POST':
+        fabricante = request.form['parametro4']
     num_consulta = 9
-    result = consulta9()
+    result = consulta9(fabricante)
     df = pd.DataFrame([record.values() for record in result], columns=result[0].keys())
     tabla_html = df.to_html(classes='table table-bordered', index=False, escape=False)
 
