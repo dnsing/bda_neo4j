@@ -16,9 +16,11 @@
             <option value="file4.csv">Archivo 4</option>
             <option value="file5.csv">Archivo 5</option>
         </select>
+        <br>
+
 
         <button id="createButton" type="button">Crear</button>
-        <button id="readButton" type="button">Leer</button>
+        
         <div id="createForm" style="display: none;">
             <input type="text" name="campo1" placeholder="Campo 1"><br>
             <input type="text" name="campo2" placeholder="Campo 2"><br>
@@ -31,15 +33,21 @@
             <button type="submit" id="submitCreate">Submit</button> <!-- Cambia el tipo a 'submit' -->
         </div>
 
-        
+        <button id="readButton" type="button">Leer</button>
         <div id="readForm" style="display: none;">
             <input type="text" name="campoLeer" placeholder="Campo para Leer"><br>
             <button type="submit" id="submitRead">Submit</button>
         </div>
+
+        <button id="deleteButton" type="button">Eliminar</button>
+        <div id="deleteForm" style="display: none;">
+            <input type="text" name="campoDelete" placeholder="Campo para Eliminar"><br>
+            <button type="submit" id="submitDelete">Submit</button>
+        </div>
+        <button id="updateButton">Actualizar</button>
     </form>
     
-    <button id="updateButton">Actualizar</button>
-    <button id="deleteButton">Eliminar</button>
+    
 
     <script>
         const createForm = document.getElementById("createForm");
@@ -53,30 +61,36 @@
         const readForm = document.getElementById("readForm");
         const readButton = document.getElementById("readButton");
 
+        const deleteForm = document.getElementById("deleteForm");
+        const deleteButton = document.getElementById("deleteButton");
+
         
 
         createButton.addEventListener("click", function() {
             createForm.style.display = "block";
-            readForm.style.display = "none"; // Oculta el formulario de lectura
-            document.getElementById("operation").value = "create"; // Establece la operación
+            readForm.style.display = "none";
+            deleteForm.style.display = "none";
+            document.getElementById("operation").value = "create";
         });
 
         readButton.addEventListener("click", function() {
             readForm.style.display = "block";
-            createForm.style.display = "none"; // Oculta el formulario de creación
-            document.getElementById("operation").value = "read"; // Establece la operación
+            createForm.style.display = "none";
+            deleteForm.style.display = "none";
+            document.getElementById("operation").value = "read";
+        });
+
+        deleteButton.addEventListener("click", function() {
+            deleteForm.style.display = "block";
+            createForm.style.display = "none";
+            readForm.style.display = "none";
+            document.getElementById("operation").value = "delete";
         });
 
         document.getElementById("updateButton").addEventListener("click", function() {
             const selectedFile = document.getElementById("fileSelector").value;
             // Redirigir a la página de actualización (reemplaza "update.php" con la URL real)
             window.location.href = `/update.php?file=${selectedFile}`;
-        });
-
-        document.getElementById("deleteButton").addEventListener("click", function() {
-            const selectedFile = document.getElementById("fileSelector").value;
-            // Redirigir a la página de eliminación (reemplaza "delete.php" con la URL real)
-            window.location.href = `/delete.php?file=${selectedFile}`;
         });
         
         createButton.addEventListener("click", function() {

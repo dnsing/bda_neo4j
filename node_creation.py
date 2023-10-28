@@ -667,7 +667,7 @@ def update_file1(input_values):
 #     }
 # ]
 
-def delete_file1(input_values):
+def delete_file1(nombre_producto):
     result = []
 
     # Connect to the Neo4j database
@@ -675,9 +675,9 @@ def delete_file1(input_values):
         with driver.session() as session:
             query = """
                 MATCH (n:PharmaceuticalProductInfo) 
-                WHERE n.NOMBRE_DEL_PRODUCTO_FARMACEUTICO = $nombre_producto 
+                WHERE n.NOMBRE_DEL_PRODUCTO_FARMACEUTICO = $input 
                 DELETE n
             """
-            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+            result = session.write_transaction(lambda tx: list(tx.run(query, input=nombre_producto)))
     
     return result

@@ -67,19 +67,19 @@ def guardar_datos_en_txt(datos):
         for dato in datos:
             archivo_txt.write(f'{dato}\n')
 
-# @app.route('/consultas', methods=['GET', 'POST'])
-# def consultas():
-#     if request.method == 'POST':
-#         if request.form['consulta'] == '3':
-#             parametro1 = request.form['parametro1']
-#             parametro2 = request.form['parametro2']
+@app.route('/consultas', methods=['GET', 'POST'])
+def consultas():
+    if request.method == 'POST':
+        if request.form['consulta'] == '3':
+            parametro1 = request.form['parametro1']
+            parametro2 = request.form['parametro2']
             
-#             # Realiza la "Consulta 3" con los parámetros recibidos
-#             # Puedes hacer la lógica de la consulta aquí
+            # Realiza la "Consulta 3" con los parámetros recibidos
+            # Puedes hacer la lógica de la consulta aquí
             
-#             # Luego, muestra los resultados en una plantilla o de la manera que desees
+            # Luego, muestra los resultados en una plantilla o de la manera que desees
             
-#     return render_template('consultas.html')
+    return render_template('consultas.html')
 
 
 @app.route('/consulta/1', methods=['POST'])
@@ -176,35 +176,32 @@ def crud_operations():
 
 @app.route('/process_form', methods=['POST'])
 def process_form():
-    operation = request.form.get('operation')  # Leer el valor del campo oculto "operation"
+    operation = request.form.get('operation')
+    file = request.form.get('fileSelector') 
 
     if operation == 'create':
-        # Leer los campos del formulario
         campo1 = request.form.get('campo1')
         campo2 = request.form.get('campo2')
         campo3 = request.form.get('campo3')
         campo4 = request.form.get('campo4')
 
-        # Si se selecciona "Archivo 1," se leen los campos adicionales
-        if request.form.get('fileSelector') == 'file1.csv':
+        if file == 'file1.csv':
             campo5 = request.form.get('campo5')
             campo6 = request.form.get('campo6')
             campo7 = request.form.get('campo7')
             campo8 = request.form.get('campo8')
         else:
-            # Establece campos adicionales en None o valores predeterminados
             campo5 = None
             campo6 = None
             campo7 = None
             campo8 = None
 
-        # Realiza las operaciones CRUD con los datos recibidos
-
-        # Puedes imprimir o procesar los datos aquí
         print(f"Campo 1: {campo1}")
         print(f"Campo 2: {campo2}")
         print(f"Campo 3: {campo3}")
         print(f"Campo 4: {campo4}")
+        
+        
         if campo5 is not None:
             print(f"Campo 5: {campo5}")
             print(f"Campo 6: {campo6}")
@@ -214,13 +211,21 @@ def process_form():
         return "Operación CRUD completada"
     
     elif operation == 'read':
-        # Realiza la operación de Leer con el campoLeer
         campoLeer = request.form.get('campoLeer')
         result = read_file1(campoLeer)
         print(result)
         print(campoLeer)
         
         return "Operación CRUD completadaREAD"
+    
+    elif operation == "delete":
+        campoDelete = request.form.get('campoDelete')
+        print(campoDelete)
+        result = delete_file1(campoDelete)
+        print(result)
+        
+        return 'DELETED'
+    
 
 if __name__ == '__main__':
     # webbrowser.open('http://localhost:5000')
