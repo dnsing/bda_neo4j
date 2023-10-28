@@ -205,13 +205,65 @@ def process_form():
             print(result)
             
         
-        elif file == 'file2.csv':
-            campo5 = None
-            campo6 = None
-            campo7 = None
-            campo8 = None
+        elif file == 'file2.csv':        
+            # grupo = = request.form.get('campo1')
+            # descripcion = request.form.get('campo2')
+            input_values = [
+                {
+                    "grupo": request.form.get('campo1'),
+                    "descripcion": request.form.get('campo2')
+                }
+            ]
+            result = create_file2(input_values)
+            print(result)
+            
+        elif file == 'file3.csv':        
+            # nombre = = request.form.get('campo1')
+            # codigo_de_medicamento = request.form.get('campo2')
+            input_values = [
+                {
+                    "nombre": request.form.get('campo1'),
+                    "codigo_de_medicamento": request.form.get('campo2')
+                }
+            ]
+            result = create_file3(input_values)
+            print(result)
+            
+        elif file == 'file4.csv':        
+            # descripcion_principio_activo = request.form.get('campo1')
+            # nombre_generico = request.form.get('campo2')
+            # presentacion = request.form.get('campo3')
+            # fabricante = request.form.get('campo4')
+            # precio_maximo_de_venta = request.form.get('campo5')
+            input_values = [
+                {
+                    "descripcion_principio_activo": request.form.get('campo1'),
+                    "nombre_generico": request.form.get('campo2'),
+                    "presentacion": request.form.get('campo3'),
+                    "fabricante": request.form.get('campo4'),
+                    "precio_maximo_de_venta": request.form.get('campo5')
+                }
+            ]
+            result = create_file4(input_values)
+            print(result)
+        
+        elif file == 'file5.csv':        
+            # servicio = request.form.get('campo1')
+            # descripcion = request.form.get('campo2')
+            # piezas_solicitadas = request.form.get('campo3')
+            input_values = [
+                {
+                    "servicio": request.form.get('campo1'),
+                    "descripcion": request.form.get('campo2'),
+                    "piezas_solicitadas": request.form.get('campo3')
+                }
+            ]
+            result = create_file5(input_values)
+            print(result)
+            
+        else:
+            print('Algo salió mal')
     
-
         return "Operación CRUD completada"
     
     elif operation == 'update':
@@ -219,26 +271,108 @@ def process_form():
             input_values = [
                 {
                     "nombre_producto": request.form.get('campo1'),
-                    "nuevo_precio": request.form.get('campo2'),
+                    "nuevo_tipo_farmaco": request.form.get('campo2'),
+                    "nuevo_nombre_laboratorio": request.form.get('campo3'),
+                    "nuevo_estado": request.form.get('campo4'),
+                    "nuevo_principio_activo": request.form.get('campo5'),
+                    "nuevo_precio_euros": request.form.get('campo6'),
+                    "nuevo_tratamiento_largo": request.form.get('campo7'),
+                    "nuevo_medicamento_huerfano": request.form.get('campo8')                
                 }
             ]
             result = update_file1(input_values)
             print(result)
-            return 'UPDATED'
+            
+        elif file == 'file2.csv':
+            input_values = [
+                {
+                    "grupo": request.form.get('campo1'),
+                    "nueva_descripcion": request.form.get('campo2')
+                }
+            ]
+            result = update_file2(input_values)
+            print(result)
+            
+        elif file == 'file3.csv':
+            input_values = [
+                {
+                    "nombre": request.form.get('campo1'),
+                    "nuevo_codigo_de_medicamento": request.form.get('campo2')
+                }
+            ]
+            result = update_file3(input_values)
+            print(result)
+            
+        elif file == 'file4.csv':
+            input_values = [
+                {
+                    "descripcion_principio_activo": request.form.get('campo1'),
+                    "nuevo_nombre_generico": request.form.get('campo2'),
+                    "nueva_presentacion": request.form.get('campo3'),
+                    "nuevo_fabricante": request.form.get('campo4'),
+                    "nuevo_precio_maximo_de_venta": request.form.get('campo5')
+                }
+            ]
+            result = update_file4(input_values)
+            print(result)
+            
+        elif file == 'file5.csv':
+            input_values = [
+                {
+                    "descripcion": request.form.get('campo1'),
+                    "nuevo_servicio": request.form.get('campo2'),
+                    "nuevas_piezas_solicitadas": request.form.get('campo3')
+                }
+            ]
+            result = update_file5(input_values)
+            print(result)   
+        else:
+            print('Algo salió mal')
+            
+        return 'UPDATED'
+         
             
     elif operation == 'read':
         if file == 'file1.csv':
             campoLeer = request.form.get('campoLeer')
-            result = read_file1(campoLeer)
+            result = read_file1(campoLeer)      
+        elif file == 'file2.csv':
+            campoLeer = request.form.get('campoLeer')
+            result = read_file2(campoLeer)         
+        elif file == 'file3.csv':
+            campoLeer = request.form.get('campoLeer')
+            result = read_file3(campoLeer)
+        elif file == 'file4.csv':
+            campoLeer = request.form.get('campoLeer')
+            result = read_file4(campoLeer)
+        elif file == 'file5.csv':
+            campoLeer = request.form.get('campoLeer')
+            result = read_file5(campoLeer)
+        else:
+            print('Algo salió mal')
             
-            return "Operación CRUD completadaREAD"
+        return "Operación CRUD completadaREAD"
     
     elif operation == "delete":
         if file == 'file1.csv':
             campoDelete = request.form.get('campoDelete')
             result = delete_file1(campoDelete)
-            
-            return 'DELETED'
+        elif file == 'file2.csv':
+            campoDelete = request.form.get('campoDelete')
+            result = delete_file2(campoDelete)
+        elif file == 'file3.csv':
+            campoDelete = request.form.get('campoDelete')
+            result = delete_file3(campoDelete)
+        elif file == 'file4.csv':
+            campoDelete = request.form.get('campoDelete')
+            result = delete_file4(campoDelete)
+        elif file == 'file5.csv':
+            campoDelete = request.form.get('campoDelete')
+            result = delete_file5(campoDelete)
+        else:
+            print('Algo salió mal')
+        
+        return 'DELETED'
     
 if __name__ == '__main__':
     # webbrowser.open('http://localhost:5000')
