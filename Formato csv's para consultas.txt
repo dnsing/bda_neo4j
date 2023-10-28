@@ -1,41 +1,3 @@
-*Consulta 1*
-Limpiar
-Para consultar:
-A6: (D) - Descripcion
-A1: (A) - Nom_prod_Farm
-    (F) - Princ_act
-A4: (B) - Descr_princ_act
-Para salida:
-A4: (D) - Nom_Generico 
-    (H) - Fabricante
-A1: (B) - Tipo_farmaco
-    (L) - Medic_huerfano
-
-Relaciones:
-Not[6(D) con 1(A)] {Están en 1, pero no en 6}
-De esos, relaciono 1(F) con 4(B)
-
-Output:
-|1(A)|1(F)|4(D)|4(H)|1(B)|1(L)|
----------------------------------
-*Consulta 1 v.2*
-Limpiar
-Para consultar:
-A6: (D) - Descripcion
-A1: (F) - Princ_act
-A4: (B) - Descr_princ_act
-Para salida:
-A4: (D) - Nom_Generico 
-    (H) - Fabricante
-A1: (B) - Tipo_farmaco
-    (L) - Medic_huerfano
-
-Relaciones:
-Not[1(F) con 6(D)] {Están en 1, pero no en 6}
-De los que quedan, relaciono 1(F) con 4(B)
-
-Output:
-|1(F)|4(D)|4(H)|1(B)|1(L)|
 --------------------------------
 *Consulta 2*
 Limpiar
@@ -68,28 +30,6 @@ Tiene 2 posibles inputs para consulta:
      Output:
        A4(B, D)
 ------------------------------------
-*Consulta 4*
-Limpiar
-Para consultar:
-A6: (C) - Servicios
-    (G) - Piezas_solicitadas
-    (D) - Descripcion
-A1: (A) - Nom_prod_Farm
-A4: (B) - Descr_princ_act
-Para salida:
-A1: (C) - Nomb_lab_ofertante
-    (G) - Precio_IVA_euro
-A4: (I) - is_Precio_regulado
-
-Relaciones:
-Separamos por Servicios[6(C)]
-De cada servicio hacemos top5 de Piezas Solicitadas[6(G)]
-6(D) con 1(A)
-6(D) con 4(B)
-
-Output
-|6(C)|6(D)|1(C)|out de consulta3(6(C))|1(G)|4(I)|
-----------------------------------
 *Consulta 5*
 Limpiar
 Para consultar:
@@ -114,21 +54,6 @@ A4: (H) - Fabricante
 Output:
 |1(F)|1(C)|4(H)|4(F)|2(B)|
 -----------------------------
-*Consulta 6*
-Limpiar
-Para consultar:
-A1: (D) - Estado
-    (F) - Princ_act
-A6: (D) - Descripcion
-
-Relaciones:
-Filtramos los medicamentos por 1(D)=suspendido
-1(F) con 6(D)
-Hacemos top10 de princ_act/_no sé con respecto a qué, no dice,pasa machete_
-
-Output
-|#|1(F)|lista 6(D) que tengan 1(F) en 6(D)|
--------------------------------------
 *Consulta 7*
 Limpiar
 Para consultar:
@@ -146,18 +71,6 @@ De todos los que 1(J) sea NO
 Output:
 |3(A)|4(D)|
 --------------------------------
-*Consulta 8*
-Limpiar
-Para consultar:
-A4: (H) - Fabricante
-    (B) - Descr_princ_act
-
-Contamos por princ_act[4(B)] cant de Fabricantes[4H].
-Hacemos top10 de princ_act
-
-Output:
-|#|4(B)|
---------------------------------
 *Consulta 9*
  Limpiar
 Para consultar:
@@ -172,7 +85,90 @@ NOT[4(B) con 3(A)]
 Output:
 |4(B)|4(H)|
 --------------------------------
+*Consulta 8*
+Limpiar
+Para consultar:
+A4: (H) - Fabricante
+    (B) - Descr_princ_act
 
+Contamos por princ_act[4(B)] cant de Fabricantes[4H].
+Hacemos top10 de princ_act
 
+Output:
+|#|4(B)|
+--------------------------------
+*Consulta 1*
+Limpiar
+Para consultar:
+A6: (D) - Descripcion
+A1: (A) - Nom_prod_Farm
+    (F) - Princ_act
+A4: (B) - Descr_princ_act
+Para salida:
+A4: (D) - Nom_Generico 
+    (H) - Fabricante
+A1: (B) - Tipo_farmaco
+    (L) - Medic_huerfano
 
+Relaciones:
+Not[6(D) con 1(A)] {Están en 1, pero no en 6}
+De esos, relaciono 1(F) con 4(B)
 
+Output:
+|1(A)|1(F)|4(D)|4(H)|1(B)|1(L)|
+---------------------------------
+*Consulta 4*
+Limpiar
+Para consultar:
+A6: (C) - Servicios
+    (G) - Piezas_solicitadas
+    (D) - Descripcion
+A1: (A) - Nom_prod_Farm
+A4: (B) - Descr_princ_act
+Para salida:
+A1: (C) - Nomb_lab_ofertante
+    (G) - Precio_IVA_euro
+A4: (I) - is_Precio_regulado
+
+Relaciones:
+Separamos por Servicios[6(C)]
+De cada servicio hacemos top5 de Piezas Solicitadas[6(G)]
+6(D) con 1(A)
+6(D) con 4(B)
+
+Output
+|6(C)|6(D)|1(C)|out de consulta3(6(C))|1(G)|4(I)|
+----------------------------------
+*Consulta 6*
+Limpiar
+Para consultar:
+A1: (D) - Estado
+    (F) - Princ_act
+A6: (D) - Descripcion
+
+Relaciones:
+Filtramos los medicamentos por 1(D)=suspendido
+1(F) con 6(D)
+Hacemos top10 de princ_act/_no sé con respecto a qué, no dice,pasa machete_
+
+Output
+|#|1(F)|lista 6(D) que tengan 1(F) en 6(D)|
+-------------------------------------
+*Consulta 1 v.2*
+Limpiar
+Para consultar:
+A6: (D) - Descripcion
+A1: (F) - Princ_act
+A4: (B) - Descr_princ_act
+Para salida:
+A4: (D) - Nom_Generico 
+    (H) - Fabricante
+A1: (B) - Tipo_farmaco
+    (L) - Medic_huerfano
+
+Relaciones:
+Not[1(F) con 6(D)] {Están en 1, pero no en 6}
+De los que quedan, relaciono 1(F) con 4(B)
+
+Output:
+|1(F)|4(D)|4(H)|1(B)|1(L)|
