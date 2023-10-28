@@ -8,11 +8,17 @@
     <div id="cargando" style="display: none;">
         Cargando archivos... Por favor, espere.
     </div>
+
+    <button onclick="abrirVentanaCRUD()">Abrir Ventana CRUD</button>
     
     <script>
         function mostrarCargando() {
             // Mostrar el mensaje de "Cargando" mientras se envían los archivos
             document.getElementById('cargando').style.display = 'block';
+        }
+
+        function abrirVentanaCRUD() {
+            window.open("/crud_operations", "_blank");
         }
     </script>
 

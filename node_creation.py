@@ -563,3 +563,121 @@ def consulta9(input_value):
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
     
     return result
+
+
+# ###########################################################CRUD###############################################################################
+
+# 1
+def read_file1(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:PharmaceuticalProductInfo) 
+                WHERE n.NOMBRE_DEL_PRODUCTO_FARMACEUTICO = $input
+                RETURN n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+def create_file1(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                fCREATE (n:PharmaceuticalProductInfo {{
+                NOMBRE_DEL_PRODUCTO_FARMACEUTICO: $nombre_producto, 
+                TIPO_DE_FARMACO: $tipo_farmaco, 
+                NOMBRE_DEL_LABORATORIO_OFERTANTE: $nombre_laboratorio, 
+                ESTADO: $estado, 
+                PRINCIPIO_ACTIVO: $principio_activo, 
+                PRECIO_VENTA_CON_IVA_EUROS: $precio_euros, 
+                TRATAMIENTO_DE_LARGA_DURACION: $tratamiento_largo, 
+                MEDICAMENTO_HUERFANO: $medicamento_huerfano
+                })
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+
+# input_values = [
+#     {
+#         "nombre_producto": "Producto 1",
+#         "tipo_farmaco": "Tipo 1",
+#         "nombre_laboratorio": "Laboratorio 1",
+#         "estado": "Activo",
+#         "principio_activo": "Activo 1",
+#         "precio_euros": 10.99,
+#         "tratamiento_largo": True,
+#         "medicamento_huerfano": False
+#     },
+#     {
+#         "nombre_producto": "Producto 2",
+#         "tipo_farmaco": "Tipo 2",
+#         "nombre_laboratorio": "Laboratorio 2",
+#         "estado": "Inactivo",
+#         "principio_activo": "Activo 2",
+#         "precio_euros": 15.99,
+#         "tratamiento_largo": False,
+#         "medicamento_huerfano": True
+#     }
+# ]
+
+def update_file1(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:PharmaceuticalProductInfo) 
+                WHERE n.NOMBRE_DEL_PRODUCTO_FARMACEUTICO = $nombre_producto 
+                SET n.PRECIO_VENTA_CON_IVA_EUROS = $nuevo_precio
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+# input_values = [
+#     {
+#         "nombre_producto": "Producto 1",
+#         "tipo_farmaco": "Tipo 1",
+#         "nombre_laboratorio": "Laboratorio 1",
+#         "estado": "Activo",
+#         "principio_activo": "Activo 1",
+#         "precio_euros": 10.99,
+#         "tratamiento_largo": True,
+#         "medicamento_huerfano": False
+#     },
+#     {
+#         "nombre_producto": "Producto 2",
+#         "tipo_farmaco": "Tipo 2",
+#         "nombre_laboratorio": "Laboratorio 2",
+#         "estado": "Inactivo",
+#         "principio_activo": "Activo 2",
+#         "precio_euros": 15.99,
+#         "tratamiento_largo": False,
+#         "medicamento_huerfano": True
+#     }
+# ]
+
+def delete_file1(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:PharmaceuticalProductInfo) 
+                WHERE n.NOMBRE_DEL_PRODUCTO_FARMACEUTICO = $nombre_producto 
+                DELETE n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
