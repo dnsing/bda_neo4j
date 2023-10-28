@@ -46,8 +46,8 @@ def cargar_csv():
         # Almacena una variable en sesión para indicar que la carga fue exitosa
         session['carga_exitosa'] = True
         
-        # normalized_text(rutas_archivos)
-        # execute(rutas_archivos)
+        normalized_text(rutas_archivos)
+        execute(rutas_archivos)
         
         return redirect(url_for('index'))
 
@@ -173,6 +173,12 @@ def consulta_9():
 @app.route('/crud_operations', methods=['GET', 'POST'])
 def crud_operations():
     return render_template('crud_operations.html')
+
+@app.route('/index_exe', methods=['GET', 'POST'])
+def index_exe():
+    result = index
+    print('Ejecutando indices')
+    return '', 204 
 
 @app.route('/process_form', methods=['POST'])
 def process_form():

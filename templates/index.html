@@ -9,16 +9,27 @@
         Cargando archivos... Por favor, espere.
     </div>
 
+    <div id="indices" style="display: none;">
+        Ejecutando los inidces... Por favor, espere.
+    </div>
+
+    <form method="post" action="/index_exe">
+        <button onclick="exeIndex()" type="submit">Ejecutar Indices</button>
+    </form>
+
     <button onclick="abrirVentanaCRUD()">Abrir Ventana CRUD</button>
     
     <script>
         function mostrarCargando() {
-            // Mostrar el mensaje de "Cargando" mientras se envían los archivos
             document.getElementById('cargando').style.display = 'block';
         }
 
         function abrirVentanaCRUD() {
             window.open("/crud_operations", "_blank");
+        }
+
+        function exeIndex() {
+            document.getElementById('indices').style.display = 'block';
         }
     </script>
 

@@ -179,7 +179,23 @@ def execute(path_list):
 # path_list = ['static/archivos_csv\\1.1_Nombre_de_productos_genéricos_y_Farmaceutica.csv', 'static/archivos_csv\\2._Catálogo_de_Categorías_de_Medicamentos_CCSS.csv', 'static/archivos_csv\\3._muestra_Medicamentos_CCSS_clasificados.csv', 'static/archivos_csv\\4._Principios_Activos_y_Presentación.csv', 'static/archivos_csv\\6-Medicamentos_adquiridos_por_hospital.csv']
 # execute(path_list)
 
-
+def index():
+    result = []
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            # Cypher query
+            query = """
+            CREATE INDEX FOR (m:Medication) ON (m.DESCRIPCION);
+            CREATE INDEX FOR (m:MedicationCode) ON (m.NOMBRE);
+            CREATE INDEX FOR (m:MedicationCode) ON (m.CODIGO_DE_MEDICAMENTO);
+            CREATE INDEX FOR (m:MedicationGroup) ON (m.GRUPO);
+            CREATE INDEX FOR (p:PharmaceuticalProductInfo) ON (p.TRATAMIENTO_DE_LARGA_DURACION);
+            CREATE INDEX FOR (m:MedicationInfo) ON (m.FABRICANTE);
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query)))
+    
+    return result
 #LISTA
 def consulta1():
     result = []
