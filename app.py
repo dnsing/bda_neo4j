@@ -180,53 +180,66 @@ def process_form():
     file = request.form.get('fileSelector') 
 
     if operation == 'create':
-        campo1 = request.form.get('campo1')
-        campo2 = request.form.get('campo2')
-        campo3 = request.form.get('campo3')
-        campo4 = request.form.get('campo4')
-
         if file == 'file1.csv':
-            campo5 = request.form.get('campo5')
-            campo6 = request.form.get('campo6')
-            campo7 = request.form.get('campo7')
-            campo8 = request.form.get('campo8')
-        else:
+            # nombre_producto = request.form.get('campo1')
+            # tipo_farmaco = request.form.get('campo2')
+            # nombre_laboratorio = request.form.get('campo3')
+            # estado = request.form.get('campo4')
+            # principio_activo = request.form.get('campo5')
+            # precio_euros = request.form.get('campo6')
+            # tratamiento_largo = request.form.get('campo7')
+            # medicamento_huerfano = request.form.get('campo8')
+            input_values = [
+                {
+                    "nombre_producto": request.form.get('campo1'),
+                    "tipo_farmaco": request.form.get('campo2'),
+                    "nombre_laboratorio": request.form.get('campo3'),
+                    "estado": request.form.get('campo4'),
+                    "principio_activo": request.form.get('campo5'),
+                    "precio_euros": request.form.get('campo6'),
+                    "tratamiento_largo": request.form.get('campo7'),
+                    "medicamento_huerfano": request.form.get('campo8')
+                }
+            ]
+            result = create_file1(input_values)
+            print(result)
+            
+        
+        elif file == 'file2.csv':
             campo5 = None
             campo6 = None
             campo7 = None
             campo8 = None
-
-        print(f"Campo 1: {campo1}")
-        print(f"Campo 2: {campo2}")
-        print(f"Campo 3: {campo3}")
-        print(f"Campo 4: {campo4}")
-        
-        
-        if campo5 is not None:
-            print(f"Campo 5: {campo5}")
-            print(f"Campo 6: {campo6}")
-            print(f"Campo 7: {campo7}")
-            print(f"Campo 8: {campo8}")
+    
 
         return "Operación CRUD completada"
     
+    elif operation == 'update':
+        if file == 'file1.csv':
+            input_values = [
+                {
+                    "nombre_producto": request.form.get('campo1'),
+                    "nuevo_precio": request.form.get('campo2'),
+                }
+            ]
+            result = update_file1(input_values)
+            print(result)
+            return 'UPDATED'
+            
     elif operation == 'read':
-        campoLeer = request.form.get('campoLeer')
-        result = read_file1(campoLeer)
-        print(result)
-        print(campoLeer)
-        
-        return "Operación CRUD completadaREAD"
+        if file == 'file1.csv':
+            campoLeer = request.form.get('campoLeer')
+            result = read_file1(campoLeer)
+            
+            return "Operación CRUD completadaREAD"
     
     elif operation == "delete":
-        campoDelete = request.form.get('campoDelete')
-        print(campoDelete)
-        result = delete_file1(campoDelete)
-        print(result)
-        
-        return 'DELETED'
+        if file == 'file1.csv':
+            campoDelete = request.form.get('campoDelete')
+            result = delete_file1(campoDelete)
+            
+            return 'DELETED'
     
-
 if __name__ == '__main__':
     # webbrowser.open('http://localhost:5000')
     app.run(debug=True)

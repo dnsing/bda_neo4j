@@ -9,19 +9,17 @@
     <form method="POST" action="/process_form"> <!-- Añade 'action' para apuntar a la ruta de Flask -->
         <input type="hidden" name="operation" id="operation">
 	
-	<select name="fileSelector"> <!-- Añade 'name' para identificar el menú desplegable -->
-            <option value="file1.csv">Archivo 1</option>
-            <option value="file2.csv">Archivo 2</option>
-            <option value="file3.csv">Archivo 3</option>
-            <option value="file4.csv">Archivo 4</option>
-            <option value="file5.csv">Archivo 5</option>
+        <select name="fileSelector"> <!-- Añade 'name' para identificar el menú desplegable -->
+                <option value="file1.csv">Archivo 1</option>
+                <option value="file2.csv">Archivo 2</option>
+                <option value="file3.csv">Archivo 3</option>
+                <option value="file4.csv">Archivo 4</option>
+                <option value="file5.csv">Archivo 5</option>
         </select>
         <br>
 
 
-        <button id="createButton" type="button">Crear</button>
-        
-        <div id="createForm" style="display: none;">
+        <div id="createForm" style="display: block;">
             <input type="text" name="campo1" placeholder="Campo 1"><br>
             <input type="text" name="campo2" placeholder="Campo 2"><br>
             <input type="text" name="campo3" placeholder="Campo 3"><br>
@@ -32,6 +30,8 @@
             <input type="text" name="campo8" placeholder="Campo 8" id="campo8"><br>
             <button type="submit" id="submitCreate">Submit</button> <!-- Cambia el tipo a 'submit' -->
         </div>
+
+        <button id="createButton" type="button">Crear</button>
 
         <button id="readButton" type="button">Leer</button>
         <div id="readForm" style="display: none;">
@@ -44,11 +44,15 @@
             <input type="text" name="campoDelete" placeholder="Campo para Eliminar"><br>
             <button type="submit" id="submitDelete">Submit</button>
         </div>
-        <button id="updateButton">Actualizar</button>
+
+        <button id="updateButton" type="button">Actualizar</button>
+        <div id="updateForm" style="display: none;">
+            <input type="text" name="campoActualizar" placeholder="Campo para Actualizar"><br>
+            <button type="submit" id="submitUpdate">Submit</button>
+        </div>
+
     </form>
     
-    
-
     <script>
         const createForm = document.getElementById("createForm");
         const createButton = document.getElementById("createButton");
@@ -57,6 +61,9 @@
         const campo6 = document.getElementsByName("campo6")[0];
         const campo7 = document.getElementsByName("campo7")[0];
         const campo8 = document.getElementsByName("campo8")[0];
+
+        const updateForm = document.getElementById("updateForm");
+        const updateButton = document.getElementById("updateButton");
 
         const readForm = document.getElementById("readForm");
         const readButton = document.getElementById("readButton");
@@ -69,28 +76,33 @@
         createButton.addEventListener("click", function() {
             createForm.style.display = "block";
             readForm.style.display = "none";
+            updateForm.style.display = "none";
             deleteForm.style.display = "none";
             document.getElementById("operation").value = "create";
+        });
+
+        updateButton.addEventListener("click", function() {
+            updateForm.style.display = "block";
+            createForm.style.display = "none";
+            readForm.style.display = "none";
+            deleteForm.style.display = "none";
+            document.getElementById("operation").value = "update";
         });
 
         readButton.addEventListener("click", function() {
             readForm.style.display = "block";
             createForm.style.display = "none";
+            updateForm.style.display = "none";
             deleteForm.style.display = "none";
             document.getElementById("operation").value = "read";
         });
 
         deleteButton.addEventListener("click", function() {
-            deleteForm.style.display = "block";
+            deleteForm.style display = "block";
             createForm.style.display = "none";
             readForm.style.display = "none";
+            updateForm.style.display = "none";
             document.getElementById("operation").value = "delete";
-        });
-
-        document.getElementById("updateButton").addEventListener("click", function() {
-            const selectedFile = document.getElementById("fileSelector").value;
-            // Redirigir a la página de actualización (reemplaza "update.php" con la URL real)
-            window.location.href = `/update.php?file=${selectedFile}`;
         });
         
         createButton.addEventListener("click", function() {
@@ -106,7 +118,7 @@
                 campo6.style.display = "block";
                 campo7.style.display = "block";
                 campo8.style.display = "block";
-            } else {
+            } else{
                 campo5.style.display = "none";
                 campo6.style.display = "none";
                 campo7.style.display = "none";
