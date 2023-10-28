@@ -17,3 +17,12 @@
 * **Andrés Marín Monge** 
 * **Irene Muñoz Castro**
 * **Daniel Sing Chamorro** 
+
+## Uso de applicación 🌐️
+
+ **1-** Darle start a la BD de Neo4j, que esté escuchando.
+ **2-** Correr el programa, cuyo main está en app.py
+ **3-** Abrir en cualquier browser una pestaña a [Pág inicio](http://127.0.0.1:5000/)
+ **4-** Usar la aplicación web a gusto
+
+
