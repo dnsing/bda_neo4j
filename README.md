@@ -20,9 +20,10 @@
 
 ## Uso de applicación 🌐️
 
- **1-** Darle start a la BD de Neo4j, que esté escuchando.
- **2-** Correr el programa, cuyo main está en app.py
- **3-** Abrir en cualquier browser una pestaña a [Pág inicio](http://127.0.0.1:5000/)
- **4-** Usar la aplicación web a gusto
+ 1. Crear e iniciar una BD de Neo4j.
+ 1. Correr el programa, cuyo main está en app.py
+ 1. Dar click aquí [Pág inicio](http://127.0.0.1:5000/) o abrir en cualquier browser una pestaña en http://127.0.0.1:5000/
+ 2. Cargar los archivos fuentes a la base de datos por medio de la página web.
+ 1. Usar la aplicación web a gusto.
 
 
