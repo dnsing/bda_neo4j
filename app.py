@@ -334,24 +334,32 @@ def process_form():
             
     elif operation == 'read':
         if file == 'file1.csv':
+            num_consulta = 1
             campoLeer = request.form.get('campoLeer')
             result = read_file1(campoLeer)      
         elif file == 'file2.csv':
+            num_consulta = 2
             campoLeer = request.form.get('campoLeer')
-            result = read_file2(campoLeer)         
+            result = read_file2(int(campoLeer))         
         elif file == 'file3.csv':
+            num_consulta = 3
             campoLeer = request.form.get('campoLeer')
             result = read_file3(campoLeer)
         elif file == 'file4.csv':
+            num_consulta = 4
             campoLeer = request.form.get('campoLeer')
             result = read_file4(campoLeer)
         elif file == 'file5.csv':
+            num_consulta = 5
             campoLeer = request.form.get('campoLeer')
-            result = read_file5(campoLeer)
+            result = read_file6(campoLeer)
         else:
-            print('Algo salió mal')
+            return 'Algo salió mal'
+        
+
+        tabla_html = result.to_html(classes='table table-bordered', index=False, escape=False)
             
-        return "Operación CRUD completadaREAD"
+        return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
     
     elif operation == "delete":
         if file == 'file1.csv':

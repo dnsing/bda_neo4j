@@ -569,7 +569,7 @@ def consulta9(input_value):
 
 # -----------1
 def read_file1(input_value):
-    result = []
+    data = []
 
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
@@ -580,8 +580,14 @@ def read_file1(input_value):
                 RETURN n
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+            
+            for record in result:
+                data.append(record['n'])
+
+    # Convertir la lista de datos en un DataFrame de pandas
+    df = pd.DataFrame([dict(node) for node in data])
     
-    return result
+    return df
 
 def create_file1(input_values):
     result = []
@@ -683,18 +689,24 @@ def delete_file1(nombre_producto):
 
 #-------2
 def read_file2(input_value):
-    result = []
+    data = []
 
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             query = """
-                MATCH (n:MedicationGroup {GRUPO: $grupo}) 
+                MATCH (n:MedicationGroup {GRUPO: $input}) 
                 RETURN n
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+            
+            for record in result:
+                data.append(record['n'])
+
+    # Convertir la lista de datos en un DataFrame de pandas
+    df = pd.DataFrame([dict(node) for node in data])
     
-    return result
+    return df
 
 def create_file2(input_values):
     result = []
@@ -743,19 +755,25 @@ def delete_file2(input_values):
 
 #-------3
 def read_file3(input_value):
-    result = []
+    data = []
 
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             query = """
-                MATCH (n:MedicationCode {NOMBRE: $nombre}) 
+                MATCH (n:MedicationCode {NOMBRE: $input}) 
                 RETURN n
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
-    
-    return result
+            
+            for record in result:
+                data.append(record['n'])
 
+    # Convertir la lista de datos en un DataFrame de pandas
+    df = pd.DataFrame([dict(node) for node in data])
+    
+    return df
+    
 def create_file3(input_values):
     result = []
 
@@ -803,18 +821,24 @@ def delete_file3(input_values):
 
 #-------4
 def read_file4(input_value):
-    result = []
+    data = []
 
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             query = """
-                MATCH (n:MedicationInfo {DESCRIPCION_PRINCIPIO_ACTIVO: $nombre}) 
+                MATCH (n:MedicationInfo {DESCRIPCION_PRINCIPIO_ACTIVO: $input}) 
                 RETURN n
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+            
+            for record in result:
+                data.append(record['n'])
+
+    # Convertir la lista de datos en un DataFrame de pandas
+    df = pd.DataFrame([dict(node) for node in data])
     
-    return result
+    return df
 
 def create_file4(input_values):
     result = []
@@ -866,18 +890,23 @@ def delete_file4(input_values):
 
 #-------6
 def read_file6(input_value):
-    result = []
+    data = []
 
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             query = """
-                MATCH (n:Medication {DESCRIPCION: $descripcion}) 
+                MATCH (n:Medication {DESCRIPCION: $input}) 
                 RETURN n
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+            for record in result:
+                data.append(record['n'])
+
+    # Convertir la lista de datos en un DataFrame de pandas
+    df = pd.DataFrame([dict(node) for node in data])
     
-    return result
+    return df
 
 def create_file6(input_values):
     result = []

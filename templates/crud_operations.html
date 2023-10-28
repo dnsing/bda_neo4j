@@ -35,7 +35,14 @@
 
         <button id="updateButton" type="button">Actualizar</button>
         <div id="updateForm" style="display: none;">
-            <input type="text" name="campo1" placeholder="Campo 1" id="campo9"><br>
+            <input type="text" name="campo9" placeholder="Campo 9" id="campo9"><br>
+            <input type="text" name="campo10" placeholder="Campo 2" id="campo10"><br>
+            <input type="text" name="campo3" placeholder="Campo 3" id="campo11"><br>
+            <input type="text" name="campo4" placeholder="Campo 4" id="campo12"><br>
+            <input type="text" name="campo5" placeholder="Campo 5" id="campo13"><br>
+            <input type="text" name="campo6" placeholder="Campo 6" id="campo14"><br>
+            <input type="text" name="campo7" placeholder="Campo 7" id="campo15"><br>
+            <input type="text" name="campo8" placeholder="Campo 8" id="campo16"><br>
             <button type="submit" id="submitUpdate">Submit</button>
         </div>
 
@@ -51,17 +58,11 @@
             <button type="submit" id="submitDelete">Submit</button>
         </div>
     </form>
-    
-    
 
     <script>
         const createForm = document.getElementById("createForm");
         const createButton = document.getElementById("createButton");
-        const fileSelector = document.getElementsByName("fileSelector")[0]; // Accede al primer elemento (menú desplegable)
-        const campo5 = document.getElementsByName("campo5")[0]; // Accede al primer elemento
-        const campo6 = document.getElementsByName("campo6")[0];
-        const campo7 = document.getElementsByName("campo7")[0];
-        const campo8 = document.getElementsByName("campo8")[0];
+        const fileSelector = document.getElementsByName("fileSelector")[0];
 
         const readForm = document.getElementById("readForm");
         const readButton = document.getElementById("readButton");
@@ -109,6 +110,16 @@
             toggleFields();
         });
 
+        updateButton.addEventListener("click", function() {
+            updateForm.style.display = "block";
+            toggleFields();
+        });
+
+        readButton.addEventListener("click", function() {
+            readForm.style.display = "block";
+            toggleFields();
+        });
+
         fileSelector.addEventListener("change", toggleFields);
 
         function toggleFields() {
@@ -127,7 +138,7 @@
                     campo4.placeholder = "Estado"
     
                     campo5.style.display = "block";
-                    campo4.placeholder = "Principio Activo"
+                    campo5.placeholder = "Principio Activo"
     
                     campo6.style.display = "block";
                     campo6.placeholder = "Precio"
@@ -137,73 +148,175 @@
     
                     campo8.style.display = "block";
                     campo8.placeholder = "Huerfano"
+                } else if (operation.value == 'update'){
+                    campo9.style.display = "block";
+                    campo9.placeholder = "Nombre del Producto"
+
+                    campo10.style.display = "block";
+                    campo10.placeholder = "Tipo farmaco"
+    
+                    campo11.style.display = "block";
+                    campo11.placeholder = "Laboratorio"
+    
+                    campo12.style.display = "block";
+                    campo12.placeholder = "Estado"
+    
+                    campo13.style.display = "block";
+                    campo13.placeholder = "Principio Activo"
+    
+                    campo14.style.display = "block";
+                    campo14.placeholder = "Precio"
+    
+                    campo15.style.display = "block";
+                    campo15.placeholder = "Larga duracion"
+    
+                    campo16.style.display = "block";
+                    campo16.placeholder = "Huerfano"
+                    
+                }else if (operation.value == 'update'){
+                    campoLeer.placeholder = 'Nombre Producto '
+                }
+
+            } else  if (fileSelector.value === "file2.csv"){
+                if (operation.value == 'create'){
+                    campo1.style.display = "block";
+                    campo1.placeholder = "Grupo"
+    
+                    campo2.style.display = "block";
+                    campo2.placeholder = "Descripcion"
+    
+                    campo3.style.display = "none";
+                    campo4.style.display = "none";
+                    campo5.style.display = "none";
+                    campo6.style.display = "none";
+                    campo7.style.display = "none";
+                    campo8.style.display = "none";
+
+                } else if (operation.value == 'update'){
+                    campo9.style.display = "block";
+                    campo9.placeholder = "Grupo"
+    
+                    campo10.style.display = "block";
+                    campo10.placeholder = "Descripcion"
+    
+                    campo11.style.display = "none";
+                    campo12.style.display = "none";
+                    campo13.style.display = "none";
+                    campo14.style.display = "none";
+                    campo15.style.display = "none";
+                    campo16.style.display = "none";
+
                 }
 
 
+            } else  if (fileSelector.value === "file3.csv"){
+                if (operation.value == 'create'){
+                    campo1.style.display = "block";
+                    campo1.placeholder = "Nombre"
+    
+                    campo2.style.display = "block";
+                    campo2.placeholder = "Codigo de Medicamento"
+    
+                    campo3.style.display = "none";
+                    campo4.style.display = "none";
+                    campo5.style.display = "none";
+                    campo6.style.display = "none";
+                    campo7.style.display = "none";
+                    campo8.style.display = "none";
+
+                } else if (operation.value == 'update'){
+                    campo9.style.display = "block";
+                    campo9.placeholder = "Nombre"
+    
+                    campo10.style.display = "block";
+                    campo10.placeholder = "Codigo de Medicamento"
+    
+                    campo11.style.display = "none";
+                    campo12.style.display = "none";
+                    campo13.style.display = "none";
+                    campo14.style.display = "none";
+                    campo15.style.display = "none";
+                    campo16.style.display = "none";
+
+                }
 
 
-            } else  if (fileSelector.value === "file2.csv" && operation.value == 'create'){
-                campo1.style.display = "block";
-                campo1.placeholder = "Grupo"
+            } else  if (fileSelector.value === "file4.csv") {
+                if (operation.value == 'create') {
+                    campo1.style.display = "block";
+                    campo1.placeholder = "Descripcion Principio Activo"
+    
+                    campo2.style.display = "block";
+                    campo2.placeholder = "Nombre Generico"
+    
+                    campo3.style.display = "block";
+                    campo3.placeholder = "Presentacion"
+    
+                    campo4.style.display = "block";
+                    campo4.placeholder = "Fabricante"
+    
+                    campo5.style.display = "block";
+                    campo5.placeholder = "Precio Maximo de Venta"
+    
+                    campo6.style.display = "none";
+                    campo7.style.display = "none";
+                    campo8.style.display = "none";
 
-                campo2.style.display = "block";
-                campo2.placeholder = "Descripcion"
+                } else if (operation.value == 'update'){
+                    campo9.style.display = "block";
+                    campo9.placeholder = "Descripcion Principio Activo"
+    
+                    campo10.style.display = "block";
+                    campo10.placeholder = "Nombre Generico"
+    
+                    campo11.style.display = "block";
+                    campo11.placeholder = "Presentacion"
+    
+                    campo12.style.display = "block";
+                    campo12.placeholder = "Fabricante"
+    
+                    campo13.style.display = "block";
+                    campo13.placeholder = "Precio Maximo de Venta"
+    
+                    campo14.style.display = "none";
+                    campo15.style.display = "none";
+                    campo16.style.display = "none";
+                }
 
-                campo3.style.display = "none";
-                campo4.style.display = "none";
-                campo5.style.display = "none";
-                campo6.style.display = "none";
-                campo7.style.display = "none";
-                campo8.style.display = "none";
+            }   else  if (fileSelector.value === "file5.csv") {
+                if (operation.value == 'create'){
+                    campo1.style.display = "block";
+                    campo1.placeholder = "Servicio"
+    
+                    campo2.style.display = "block";
+                    campo2.placeholder = "Descripcion"
+    
+                    campo3.style.display = "block";
+                    campo3.placeholder = "Piezas Solicitadas"
+    
+                    campo4.style.display = "none";
+                    campo5.style.display = "none";
+                    campo6.style.display = "none";
+                    campo7.style.display = "none";
+                    campo8.style.display = "none";
 
-            } else  if (fileSelector.value === "file3.csv" && operation.value == 'create'){
-                campo1.style.display = "block";
-                campo1.placeholder = "Nombre"
+                } else if (operation.value == 'update'){
+                    campo9.style.display = "block";
+                    campo9.placeholder = "Servicio"
+    
+                    campo10.style.display = "block";
+                    campo10.placeholder = "Descripcion"
+    
+                    campo11.style.display = "block";
+                    campo11.placeholder = "Piezas Solicitadas"
+    
+                    campo12.style.display = "none";
+                    campo16.style.display = "none";
+                    campo13.style.display = "none";
+                    campo14.style.display = "none";
+                    campo15.style.display = "none";
+                }
 
-                campo2.style.display = "block";
-                campo2.placeholder = "Codigo de Medicamento"
-
-                campo3.style.display = "none";
-                campo4.style.display = "none";
-                campo5.style.display = "none";
-                campo6.style.display = "none";
-                campo7.style.display = "none";
-                campo8.style.display = "none";
-
-            } else  if (fileSelector.value === "file4.csv" && operation.value == 'create') {
-                campo1.style.display = "block";
-                campo1.placeholder = "Descripcion Principio Activo"
-
-                campo2.style.display = "block";
-                campo2.placeholder = "Nombre Generico"
-
-                campo3.style.display = "block";
-                campo3.placeholder = "Presentacion"
-
-                campo4.style.display = "block";
-                campo4.placeholder = "Fabricante"
-
-                campo5.style.display = "block";
-                campo5.placeholder = "Precio Maximo de Venta"
-
-                campo6.style.display = "none";
-                campo7.style.display = "none";
-                campo8.style.display = "none";
-            }   else  if (fileSelector.value === "file5.csv" && operation.value == 'create') {
-                campo1.style.display = "block";
-                campo1.placeholder = "Servicio"
-
-                campo2.style.display = "block";
-                campo2.placeholder = "Descripcion"
-
-                campo3.style.display = "block";
-                campo3.placeholder = "Piezas Solicitadas"
-
-                campo4.style.display = "none";
-                campo5.style.display = "none";
-                campo6.style.display = "none";
-                campo7.style.display = "none";
-                campo8.style.display = "none";
         }
     }
 
