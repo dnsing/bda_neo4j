@@ -9,21 +9,23 @@
     <form method="POST" action="/process_form"> <!-- Añade 'action' para apuntar a la ruta de Flask -->
         <input type="hidden" name="operation" id="operation">
 	
-        <select name="fileSelector"> <!-- Añade 'name' para identificar el menú desplegable -->
-                <option value="file1.csv">Archivo 1</option>
-                <option value="file2.csv">Archivo 2</option>
-                <option value="file3.csv">Archivo 3</option>
-                <option value="file4.csv">Archivo 4</option>
-                <option value="file5.csv">Archivo 5</option>
+	<select name="fileSelector"> <!-- Añade 'name' para identificar el menú desplegable -->
+            <option value="file1.csv">Archivo 1</option>
+            <option value="file2.csv">Archivo 2</option>
+            <option value="file3.csv">Archivo 3</option>
+            <option value="file4.csv">Archivo 4</option>
+            <option value="file5.csv">Archivo 5</option>
         </select>
         <br>
 
 
-        <div id="createForm" style="display: block;">
-            <input type="text" name="campo1" placeholder="Campo 1"><br>
-            <input type="text" name="campo2" placeholder="Campo 2"><br>
-            <input type="text" name="campo3" placeholder="Campo 3"><br>
-            <input type="text" name="campo4" placeholder="Campo 4"><br>
+        <button id="createButton" type="button">Crear</button>
+        
+        <div id="createForm" style="display: none;">
+            <input type="text" name="campo1" placeholder="Campo 1" id="campo1"><br>
+            <input type="text" name="campo2" placeholder="Campo 2" id="campo2"><br>
+            <input type="text" name="campo3" placeholder="Campo 3" id="campo3"><br>
+            <input type="text" name="campo4" placeholder="Campo 4" id="campo4"><br>
             <input type="text" name="campo5" placeholder="Campo 5" id="campo5"><br>
             <input type="text" name="campo6" placeholder="Campo 6" id="campo6"><br>
             <input type="text" name="campo7" placeholder="Campo 7" id="campo7"><br>
@@ -31,11 +33,15 @@
             <button type="submit" id="submitCreate">Submit</button> <!-- Cambia el tipo a 'submit' -->
         </div>
 
-        <button id="createButton" type="button">Crear</button>
+        <button id="updateButton" type="button">Actualizar</button>
+        <div id="updateForm" style="display: none;">
+            <input type="text" name="campo1" placeholder="Campo 1" id="campo9"><br>
+            <button type="submit" id="submitUpdate">Submit</button>
+        </div>
 
         <button id="readButton" type="button">Leer</button>
         <div id="readForm" style="display: none;">
-            <input type="text" name="campoLeer" placeholder="Campo para Leer"><br>
+            <input type="text" name="campoLeer" id="campoLeer" placeholder="Campo para Leer"><br>
             <button type="submit" id="submitRead">Submit</button>
         </div>
 
@@ -44,15 +50,10 @@
             <input type="text" name="campoDelete" placeholder="Campo para Eliminar"><br>
             <button type="submit" id="submitDelete">Submit</button>
         </div>
-
-        <button id="updateButton" type="button">Actualizar</button>
-        <div id="updateForm" style="display: none;">
-            <input type="text" name="campoActualizar" placeholder="Campo para Actualizar"><br>
-            <button type="submit" id="submitUpdate">Submit</button>
-        </div>
-
     </form>
     
+    
+
     <script>
         const createForm = document.getElementById("createForm");
         const createButton = document.getElementById("createButton");
@@ -62,22 +63,20 @@
         const campo7 = document.getElementsByName("campo7")[0];
         const campo8 = document.getElementsByName("campo8")[0];
 
-        const updateForm = document.getElementById("updateForm");
-        const updateButton = document.getElementById("updateButton");
-
         const readForm = document.getElementById("readForm");
         const readButton = document.getElementById("readButton");
 
         const deleteForm = document.getElementById("deleteForm");
         const deleteButton = document.getElementById("deleteButton");
 
-        
+        const updateForm = document.getElementById("updateForm");
+        const updateButton = document.getElementById("updateButton");
 
         createButton.addEventListener("click", function() {
             createForm.style.display = "block";
             readForm.style.display = "none";
-            updateForm.style.display = "none";
             deleteForm.style.display = "none";
+            updateForm.style.display = "none";
             document.getElementById("operation").value = "create";
         });
 
@@ -92,13 +91,13 @@
         readButton.addEventListener("click", function() {
             readForm.style.display = "block";
             createForm.style.display = "none";
-            updateForm.style.display = "none";
             deleteForm.style.display = "none";
+            updateForm.style.display = "none";
             document.getElementById("operation").value = "read";
         });
 
         deleteButton.addEventListener("click", function() {
-            deleteForm.style display = "block";
+            deleteForm.style.display = "block";
             createForm.style.display = "none";
             readForm.style.display = "none";
             updateForm.style.display = "none";
@@ -114,17 +113,99 @@
 
         function toggleFields() {
             if (fileSelector.value === "file1.csv") {
-                campo5.style.display = "block";
-                campo6.style.display = "block";
-                campo7.style.display = "block";
-                campo8.style.display = "block";
-            } else{
+                if (operation.value == 'create'){
+                    campo1.style.display = "block";
+                    campo1.placeholder = "Nombre del Producto"
+    
+                    campo2.style.display = "block";
+                    campo2.placeholder = "Tipo farmaco"
+    
+                    campo3.style.display = "block";
+                    campo3.placeholder = "Laboratorio"
+    
+                    campo4.style.display = "block";
+                    campo4.placeholder = "Estado"
+    
+                    campo5.style.display = "block";
+                    campo4.placeholder = "Principio Activo"
+    
+                    campo6.style.display = "block";
+                    campo6.placeholder = "Precio"
+    
+                    campo7.style.display = "block";
+                    campo7.placeholder = "Larga duracion"
+    
+                    campo8.style.display = "block";
+                    campo8.placeholder = "Huerfano"
+                }
+
+
+
+
+            } else  if (fileSelector.value === "file2.csv" && operation.value == 'create'){
+                campo1.style.display = "block";
+                campo1.placeholder = "Grupo"
+
+                campo2.style.display = "block";
+                campo2.placeholder = "Descripcion"
+
+                campo3.style.display = "none";
+                campo4.style.display = "none";
                 campo5.style.display = "none";
                 campo6.style.display = "none";
                 campo7.style.display = "none";
                 campo8.style.display = "none";
-            }
+
+            } else  if (fileSelector.value === "file3.csv" && operation.value == 'create'){
+                campo1.style.display = "block";
+                campo1.placeholder = "Nombre"
+
+                campo2.style.display = "block";
+                campo2.placeholder = "Codigo de Medicamento"
+
+                campo3.style.display = "none";
+                campo4.style.display = "none";
+                campo5.style.display = "none";
+                campo6.style.display = "none";
+                campo7.style.display = "none";
+                campo8.style.display = "none";
+
+            } else  if (fileSelector.value === "file4.csv" && operation.value == 'create') {
+                campo1.style.display = "block";
+                campo1.placeholder = "Descripcion Principio Activo"
+
+                campo2.style.display = "block";
+                campo2.placeholder = "Nombre Generico"
+
+                campo3.style.display = "block";
+                campo3.placeholder = "Presentacion"
+
+                campo4.style.display = "block";
+                campo4.placeholder = "Fabricante"
+
+                campo5.style.display = "block";
+                campo5.placeholder = "Precio Maximo de Venta"
+
+                campo6.style.display = "none";
+                campo7.style.display = "none";
+                campo8.style.display = "none";
+            }   else  if (fileSelector.value === "file5.csv" && operation.value == 'create') {
+                campo1.style.display = "block";
+                campo1.placeholder = "Servicio"
+
+                campo2.style.display = "block";
+                campo2.placeholder = "Descripcion"
+
+                campo3.style.display = "block";
+                campo3.placeholder = "Piezas Solicitadas"
+
+                campo4.style.display = "none";
+                campo5.style.display = "none";
+                campo6.style.display = "none";
+                campo7.style.display = "none";
+                campo8.style.display = "none";
         }
+    }
 
 
 
