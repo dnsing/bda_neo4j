@@ -740,3 +740,187 @@ def delete_file2(input_values):
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
     
     return result
+
+#-------3
+def read_file3(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationCode {NOMBRE: $nombre}) 
+                RETURN n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+def create_file3(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                CREATE (n:MedicationCode {
+                NOMBRE: $nombre, 
+                CODIGO_DE_MEDICAMENTO: $codigo_de_medicamento
+                })
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+
+def update_file3(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationCode {NOMBRE: $nombre}) 
+                SET n.CODIGO_DE_MEDICAMENTO = $nuevoCodigo
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+def delete_file3(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationCode {NOMBRE: $nombre}) 
+                DELETE n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+#-------4
+def read_file4(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationInfo {DESCRIPCION_PRINCIPIO_ACTIVO: $nombre}) 
+                RETURN n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+def create_file4(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                CREATE (n:MedicationInfo {
+                DESCRIPCION_PRINCIPIO_ACTIVO: $descripcion_principio_activo, 
+                NOMBRE_GENERICO: $nombre_generico, 
+                PRESENTACION: $presentacion, 
+                FABRICANTE: $fabricante, 
+                PRECIO_MAXIMO_DE_VENTA: $precio_maximo_de_venta
+                })
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+
+def update_file4(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationInfo {DESCRIPCION_PRINCIPIO_ACTIVO: $nombre}) 
+                SET n.PRECIO_MAXIMO_DE_VENTA = $nuevoPrecio
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+def delete_file4(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationInfo {NOMBRE_GENERICO: $nombre_generico}) 
+                DELETE n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+#-------6
+def read_file6(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:Medication {DESCRIPCION: $descripcion}) 
+                RETURN n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+def create_file6(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                CREATE (n:Medication {
+                SERVICIO: $servicio, 
+                DESCRIPCION: $descripcion, 
+                PIEZAS_SOLICITADAS: $piezas_solicitadas
+                })
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+
+def update_file6(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:Medication {DESCRIPCION: $descripcion}) 
+                SET n.PIEZAS_SOLICITADAS = $nuevasPiezas
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+def delete_file6(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:Medication {SERVICIO: $servicio}) 
+                DELETE n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
