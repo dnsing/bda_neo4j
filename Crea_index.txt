@@ -1,0 +1,62 @@
+--------------------------------------------------
+  +++ Creación índices +++
+--------------------------------------------------
+QGeneral
+CREATE INDEX ON :Medication(DESCRIPCION);
+CREATE INDEX ON :MedicationCode(NOMBRE);
+CREATE INDEX ON :MedicationCode(CODIGO_DE_MEDICAMENTO);
+CREATE INDEX ON :MedicationGroup(GRUPO);
+CREATE INDEX ON :PharmaceuticalProductInfo(TRATAMIENTO_DE_LARGA_DURACION);
+CREATE INDEX ON :MedicationInfo(FABRICANTE);
+--------------------------------------------------
+Q1
+CREATE INDEX ON :PharmaceuticalProductInfo(NOMBRE_DEL_PRODUCTO_FARMACEUTICO);
+CREATE INDEX ON :PharmaceuticalProductInfo(PRINCIPIO_ACTIVO);
+CREATE INDEX ON :MedicationInfo(DESCRIPCION_PRINCIPIO_ACTIVO);
+--------------------------------------------------
+Q2
+CREATE INDEX ON :MedicationCode(DESCRIPCION);
+--------------------------------------------------
+Q3
+CREATE INDEX ON :PharmaceuticalProductInfo(PRINCIPIO_ACTIVO);
+CREATE INDEX ON :MedicationInfo(DESCRIPCION_PRINCIPIO_ACTIVO);
+CREATE INDEX ON :Medication(SERVICIO);
+CREATE INDEX ON :PharmaceuticalProductInfo(NOMBRE_DEL_PRODUCTO_FARMACEUTICO);
+CREATE INDEX ON :PharmaceuticalProductInfo(NOMBRE_DEL_LABORATORIO_OFERTANTE);
+CREATE INDEX ON :PharmaceuticalProductInfo(PRECIO_VENTA_CON_IVA_EUROS);
+CREATE INDEX ON :MedicationInfo(PRECIO_MAXIMO_DE_VENTA);
+CREATE INDEX ON :Medication(PIEZAS_SOLICITADAS);
+--------------------------------------------------
+Q4
+CREATE INDEX ON :PharmaceuticalProductInfo(PRINCIPIO_ACTIVO);
+CREATE INDEX ON :Medication(DESCRIPCION);
+CREATE INDEX ON :MedicationInfo(DESCRIPCION_PRINCIPIO_ACTIVO);
+CREATE INDEX ON :Medication(SERVICIO);
+CREATE INDEX ON :PharmaceuticalProductInfo(NOMBRE_DEL_PRODUCTO_FARMACEUTICO);
+CREATE INDEX ON :PharmaceuticalProductInfo(NOMBRE_DEL_LABORATORIO_OFERTANTE);
+CREATE INDEX ON :PharmaceuticalProductInfo(PRECIO_VENTA_CON_IVA_EUROS);
+CREATE INDEX ON :MedicationInfo(PRECIO_MAXIMO_DE_VENTA);
+CREATE INDEX ON :Medication(PIEZAS_SOLICITADAS);
+--------------------------------------------------
+Q5
+CREATE INDEX ON :PharmaceuticalProductInfo(PRINCIPIO_ACTIVO);
+CREATE INDEX ON :MedicationInfo(DESCRIPCION_PRINCIPIO_ACTIVO);
+CREATE INDEX ON :MedicationCode(NOMBRE);
+CREATE INDEX ON :MedicationCode(CODIGO_DE_MEDICAMENTO);
+CREATE INDEX ON :MedicationGroup(GRUPO);
+--------------------------------------------------
+Q6
+CREATE INDEX ON :MedicationCode(NOMBRE);
+--------------------------------------------------
+Q7
+CREATE INDEX ON :PharmaceuticalProductInfo(TRATAMIENTO_DE_LARGA_DURACION);
+CREATE INDEX ON :MedicationCode(NOMBRE);
+CREATE INDEX ON :MedicationCode(CODIGO_DE_MEDICAMENTO);
+CREATE INDEX ON :MedicationGroup(GRUPO);
+CREATE INDEX ON :MedicationInfo(DESCRIPCION_PRINCIPIO_ACTIVO);
+--------------------------------------------------
+Q8
+NA
+--------------------------------------------------
+Q9
+CREATE INDEX ON :MedicationInfo(FABRICANTE);
