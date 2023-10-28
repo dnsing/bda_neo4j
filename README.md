@@ -8,7 +8,7 @@
 * [Visual Studio](https://visualstudio.microsoft.com/) - IDE alto nivel
 * [Neo4j Enterprise 5.13.0 ](https://neo4j.com/) - Base de datos no relacional
 * [Neo4j Desktop 1.5.9](https://neo4j.com/download/) - Herramienta de consulta Cypher
-* [pandas](https://pandas.pydata.org/) - Herramienta de manipulación y análisis de datos
+* [pandas](https://pandas.pydata.org/) - Biblioteca de manipulación y análisis de datos
 * [flask](https://flask.palletsprojects.com/en/3.0.x/) - Micro web framework
 * [neo4j](https://neo4j.com/developer/python/) - Driver de Python para conexión con BD Neo4j
 

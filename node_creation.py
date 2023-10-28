@@ -195,7 +195,7 @@ def consulta1():
                     }
                 MATCH(mi:MedicationInfo)
                 WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = p.PRINCIPIO_ACTIVO              
-                RETURN DISTINCT p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO AS NOMBRE, p.PRINCIPIO_ACTIVO as PRINCIPIO_ACTIVO, mi.NOMBRE_GENERICO AS NOMBRE_GENERICO, mi.FABRICANTE AS FABRICANTE, p.TIPO_DE_FARMACO AS TIPO_DE_FARMACO, p.MEDICAMENTO_HUERFANO AS MEDICAMENTO_HUERFANO
+                RETURN DISTINCT p.NOMBRE_DEL_PRODUCTO_FARMACEUTICO AS NOMBRE, p.PRINCIPIO_ACTIVO as PRINCIPIO_ACTIVO, mi.NOMBRE_GENERICO AS NOMBRE_GENERICO, mi.FABRICANTE AS FABRICANTE, p.TIPO_DE_FARMACO AS TIPO_DE_FARMACO, p.MEDICAMENTO_HUERFANO AS MEDICAMENTO_HUERFANO;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
@@ -273,7 +273,7 @@ def consulta3(input_value, flagConsulta3):
         WITH m
         MATCH (n:MedicationInfo)
         WHERE m.NOMBRE_GENERICO = n.DESCRIPCION_PRINCIPIO_ACTIVO
-        RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO
+        RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO;
     '''
     queryGenerico = '''
         MATCH (o:MedicationInfo)
@@ -284,7 +284,7 @@ def consulta3(input_value, flagConsulta3):
         WITH m
         MATCH (n:MedicationInfo)
         WHERE m.NOMBRE_GENERICO = n.DESCRIPCION_PRINCIPIO_ACTIVO
-        RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO
+        RETURN m.DESCRIPCION_PRINCIPIO_ACTIVO AS DESCRIPCION_PRINCIPIO_ACTIVO, n.NOMBRE_GENERICO AS NOMBRE_GENERICO;
     '''
     # Connect to the Neo4j database
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
@@ -337,7 +337,7 @@ def consulta4():
                     precioMaximo,
                     COLLECT(DISTINCT nombreProducto)[0..5] AS top5Productos
                                             
-                RETURN servicio, laboratorio, top5Productos, precioVentaEuros, precioMaximo
+                RETURN servicio, laboratorio, top5Productos, precioVentaEuros, precioMaximo;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
@@ -458,7 +458,7 @@ def consulta6():
                 WHERE m.PRINCIPIO_ACTIVO = n.NOMBRE 
                 RETURN DISTINCT m.PRINCIPIO_ACTIVO AS PRINCIPIO_ACTIVO, COUNT(*) AS occurrence_count
                 ORDER BY occurrence_count DESC
-                LIMIT 10
+                LIMIT 10;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
@@ -558,7 +558,7 @@ def consulta9(input_value):
                 WITH mi
                 WHERE NOT EXISTS {MATCH(mc:MedicationCode{NOMBRE: mi.DESCRIPCION_PRINCIPIO_ACTIVO})}
 
-                RETURN DISTINCT mi.FABRICANTE, mi.DESCRIPCION_PRINCIPIO_ACTIVO
+                RETURN DISTINCT mi.FABRICANTE, mi.DESCRIPCION_PRINCIPIO_ACTIVO;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
     
