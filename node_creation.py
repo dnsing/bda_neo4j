@@ -507,7 +507,7 @@ def consulta7():
                 WHERE mg.GRUPO = toInteger(SUBSTRING(toString(mc.CODIGO_DE_MEDICAMENTO), 0, 2))
                 MATCH (mi:MedicationInfo)
                 WHERE mi.DESCRIPCION_PRINCIPIO_ACTIVO = mc.NOMBRE
-                RETURN mc.NOMBRE AS NOMBRE, mi.NOMBRE_GENERICO AS NOMBRE_GENERICO, mg.DESCRIPCION AS PADECIMIENTO;
+                RETURN DISTINCT mc.NOMBRE AS NOMBRE, mi.NOMBRE_GENERICO AS NOMBRE_GENERICO, mg.DESCRIPCION AS PADECIMIENTO;
             """
             result = session.read_transaction(lambda tx: list(tx.run(query)))
     
