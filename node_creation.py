@@ -567,7 +567,7 @@ def consulta9(input_value):
 
 # ###########################################################CRUD###############################################################################
 
-# 1
+# -----------1
 def read_file1(input_value):
     result = []
 
@@ -604,7 +604,6 @@ def create_file1(input_values):
             result = session.write_transaction(lambda tx: tx.run(query, **input_value))
     
     return result
-
 
 # input_values = [
 #     {
@@ -676,6 +675,66 @@ def delete_file1(input_values):
             query = """
                 MATCH (n:PharmaceuticalProductInfo) 
                 WHERE n.NOMBRE_DEL_PRODUCTO_FARMACEUTICO = $nombre_producto 
+                DELETE n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+#-------2
+def read_file2(input_value):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationGroup {GRUPO: $grupo}) 
+                RETURN n
+            """
+            result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
+    
+    return result
+
+def create_file2(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                CREATE (n:MedicationGroup {
+                GRUPO: $grupo, 
+                DESCRIPCION: $descripcion
+                })
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+
+def update_file2(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationGroup {GRUPO: $grupo}) 
+                SET n.DESCRIPCION = $nuevaDescripcion
+            """
+            result = session.write_transaction(lambda tx: tx.run(query, **input_value))
+    
+    return result
+
+def delete_file2(input_values):
+    result = []
+
+    # Connect to the Neo4j database
+    with GraphDatabase.driver(uri, auth=(username, password)) as driver:
+        with driver.session() as session:
+            query = """
+                MATCH (n:MedicationGroup {GRUPO: $grupo}) 
                 DELETE n
             """
             result = session.read_transaction(lambda tx: list(tx.run(query, input=input_value)))
