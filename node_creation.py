@@ -452,9 +452,9 @@ def consulta6():
     with GraphDatabase.driver(uri, auth=(username, password)) as driver:
         with driver.session() as session:
             query = """
-                MATCH(n:MedicationCode)
-                WHERE n.ESTADO = 'SUSPENSION TEMPORAL GENERAL'
                 MATCH (m:PharmaceuticalProductInfo)
+                WHERE m.ESTADO = 'SUSPENSION TEMPORAL GENERAL'
+                MATCH(n:MedicationCode)
                 WHERE m.PRINCIPIO_ACTIVO = n.NOMBRE 
                 RETURN DISTINCT m.PRINCIPIO_ACTIVO AS PRINCIPIO_ACTIVO, COUNT(*) AS occurrence_count
                 ORDER BY occurrence_count DESC
