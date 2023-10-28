@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Operaciones CRUD</title>
+</head>
+<body>
+    <h1>Operaciones CRUD</h1>
+
+    <form method="POST" action="/process_form"> <!-- Añade 'action' para apuntar a la ruta de Flask -->
+        <input type="hidden" name="operation" id="operation">
+	
+	<select name="fileSelector"> <!-- Añade 'name' para identificar el menú desplegable -->
+            <option value="file1.csv">Archivo 1</option>
+            <option value="file2.csv">Archivo 2</option>
+            <option value="file3.csv">Archivo 3</option>
+            <option value="file4.csv">Archivo 4</option>
+            <option value="file5.csv">Archivo 5</option>
+        </select>
+
+        <button id="createButton" type="button">Crear</button>
+        <button id="readButton" type="button">Leer</button>
+        <div id="createForm" style="display: none;">
+            <input type="text" name="campo1" placeholder="Campo 1"><br>
+            <input type="text" name="campo2" placeholder="Campo 2"><br>
+            <input type="text" name="campo3" placeholder="Campo 3"><br>
+            <input type="text" name="campo4" placeholder="Campo 4"><br>
+            <input type="text" name="campo5" placeholder="Campo 5" id="campo5"><br>
+            <input type="text" name="campo6" placeholder="Campo 6" id="campo6"><br>
+            <input type="text" name="campo7" placeholder="Campo 7" id="campo7"><br>
+            <input type="text" name="campo8" placeholder="Campo 8" id="campo8"><br>
+            <button type="submit" id="submitCreate">Submit</button> <!-- Cambia el tipo a 'submit' -->
+        </div>
+
+        
+        <div id="readForm" style="display: none;">
+            <input type="text" name="campoLeer" placeholder="Campo para Leer"><br>
+            <button type="submit" id="submitRead">Submit</button>
+        </div>
+    </form>
+    
+    <button id="updateButton">Actualizar</button>
+    <button id="deleteButton">Eliminar</button>
+
+    <script>
+        const createForm = document.getElementById("createForm");
+        const createButton = document.getElementById("createButton");
+        const fileSelector = document.getElementsByName("fileSelector")[0]; // Accede al primer elemento (menú desplegable)
+        const campo5 = document.getElementsByName("campo5")[0]; // Accede al primer elemento
+        const campo6 = document.getElementsByName("campo6")[0];
+        const campo7 = document.getElementsByName("campo7")[0];
+        const campo8 = document.getElementsByName("campo8")[0];
+
+        const readForm = document.getElementById("readForm");
+        const readButton = document.getElementById("readButton");
+
+        
+
+        createButton.addEventListener("click", function() {
+            createForm.style.display = "block";
+            readForm.style.display = "none"; // Oculta el formulario de lectura
+            document.getElementById("operation").value = "create"; // Establece la operación
+        });
+
+        readButton.addEventListener("click", function() {
+            readForm.style.display = "block";
+            createForm.style.display = "none"; // Oculta el formulario de creación
+            document.getElementById("operation").value = "read"; // Establece la operación
+        });
+
+        document.getElementById("updateButton").addEventListener("click", function() {
+            const selectedFile = document.getElementById("fileSelector").value;
+            // Redirigir a la página de actualización (reemplaza "update.php" con la URL real)
+            window.location.href = `/update.php?file=${selectedFile}`;
+        });
+
+        document.getElementById("deleteButton").addEventListener("click", function() {
+            const selectedFile = document.getElementById("fileSelector").value;
+            // Redirigir a la página de eliminación (reemplaza "delete.php" con la URL real)
+            window.location.href = `/delete.php?file=${selectedFile}`;
+        });
+        
+        createButton.addEventListener("click", function() {
+            createForm.style.display = "block";
+            toggleFields();
+        });
+
+        fileSelector.addEventListener("change", toggleFields);
+
+        function toggleFields() {
+            if (fileSelector.value === "file1.csv") {
+                campo5.style.display = "block";
+                campo6.style.display = "block";
+                campo7.style.display = "block";
+                campo8.style.display = "block";
+            } else {
+                campo5.style.display = "none";
+                campo6.style.display = "none";
+                campo7.style.display = "none";
+                campo8.style.display = "none";
+            }
+        }
+
+
+
+
+    </script>
+</body>
+</html>

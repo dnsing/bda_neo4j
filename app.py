@@ -170,28 +170,59 @@ def consulta_9():
 
     return render_template('resultado_consulta.html', consulta=num_consulta, tabla_html=tabla_html)
 
-@app.route('/consultas', methods=['GET', 'POST'])
-def consultas_CRUD():
-    if request.method == 'POST':
-        operacion = request.form.get('operacion')
-        datos = cargar_datos_desde_txt()
+@app.route('/crud_operations', methods=['GET', 'POST'])
+def crud_operations():
+    return render_template('crud_operations.html')
 
-        if operacion == 'crear':
-            nuevo_dato = request.form.get('nuevo_dato')
-            datos.append(nuevo_dato)
-            guardar_datos_en_txt(datos)
-            flash('Dato creado exitosamente', 'success')
-        elif operacion == 'leer':
-            pass  # Puedes implementar la lectura de datos aquí
-        elif operacion == 'actualizar':
-            pass  # Puedes implementar la actualización de datos aquí
-        elif operacion == 'eliminar':
-            pass  # Puedes implementar la eliminación de datos aquí
+@app.route('/process_form', methods=['POST'])
+def process_form():
+    operation = request.form.get('operation')  # Leer el valor del campo oculto "operation"
 
-    datos = cargar_datos_desde_txt()
-    return render_template('consultas.html', datos=datos)
+    if operation == 'create':
+        # Leer los campos del formulario
+        campo1 = request.form.get('campo1')
+        campo2 = request.form.get('campo2')
+        campo3 = request.form.get('campo3')
+        campo4 = request.form.get('campo4')
 
+        # Si se selecciona "Archivo 1," se leen los campos adicionales
+        if request.form.get('fileSelector') == 'file1.csv':
+            campo5 = request.form.get('campo5')
+            campo6 = request.form.get('campo6')
+            campo7 = request.form.get('campo7')
+            campo8 = request.form.get('campo8')
+        else:
+            # Establece campos adicionales en None o valores predeterminados
+            campo5 = None
+            campo6 = None
+            campo7 = None
+            campo8 = None
+
+        # Realiza las operaciones CRUD con los datos recibidos
+
+        # Puedes imprimir o procesar los datos aquí
+        print(f"Campo 1: {campo1}")
+        print(f"Campo 2: {campo2}")
+        print(f"Campo 3: {campo3}")
+        print(f"Campo 4: {campo4}")
+        if campo5 is not None:
+            print(f"Campo 5: {campo5}")
+            print(f"Campo 6: {campo6}")
+            print(f"Campo 7: {campo7}")
+            print(f"Campo 8: {campo8}")
+
+        return "Operación CRUD completada"
+    
+    elif operation == 'read':
+        # Realiza la operación de Leer con el campoLeer
+        campoLeer = request.form.get('campoLeer')
+        result = read_file1(campoLeer)
+        print(result)
+        print(campoLeer)
+        
+        return "Operación CRUD completadaREAD"
 
 if __name__ == '__main__':
     # webbrowser.open('http://localhost:5000')
     app.run(debug=True)
+
